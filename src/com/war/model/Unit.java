@@ -53,7 +53,7 @@ public class Unit extends Target{
         this.team=team;
         this.image= new ImageIcon("images/units/"+unit+"0.png");
         this.collisionRec=new Rectangle(x, y, getImage().getIconWidth(), getImage().getIconHeight());
-        this.ratio= new Rectangle(x-getImage().getIconWidth()*5, y-getImage().getIconWidth()*5, getImage().getIconWidth()*5, getImage().getIconHeight()*3);
+        this.ratio= new Rectangle(x, y, getImage().getIconWidth()*4, getImage().getIconHeight()*4);
         this.move=false;
         this.nameImage= unit;
         this.bulletType=bullet;

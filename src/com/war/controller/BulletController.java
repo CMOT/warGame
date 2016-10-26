@@ -7,6 +7,7 @@ package com.war.controller;
 
 import com.war.model.Build;
 import com.war.model.Bullet;
+import com.war.model.Target;
 import com.war.model.Unit;
 import com.war.utils.CommonUtils;
 import java.util.ArrayList;
@@ -29,15 +30,18 @@ public class BulletController {
         getListBullets().add(new Bullet());
     }
 
-    public void shootEnemies(ArrayList<Unit> list){
+    public Unit shootEnemies(ArrayList<Unit> list){
         boolean removed=false;
+        Unit removedUnit= null;
         for( Bullet bullet :listBullets){
             for(Unit unit:list ){
                 if(bullet.getCollisionRec().intersects(unit.getCollisionRec())){
                     unit.setHealtPoints(unit.getHealtPoints()-bullet.getPower());
                     removed=true;
                     if(unit.getHealtPoints()<0){
+                        CommonUtils.points+=unit.getLifePoints()/10;
                         list.remove(unit);
+                        removedUnit= unit;
                     }
                     break;
                 }
@@ -47,17 +51,21 @@ public class BulletController {
                 break;
             }
         }
-        
+        return removedUnit;
     }
-    public void shootBuilds(ArrayList<Build> list){
+    
+    public Build shootBuilds(ArrayList<Build> list){
         boolean removed=false;
+        Build removedBuild=null;
         for( Bullet bullet :listBullets){
             for(Build build:list ){
                 if(bullet.getCollisionRec().intersects(build.getCollisionRec())){
                     build.setHealtPoints(build.getHealtPoints()-bullet.getPower());
                     removed=true;
                     if(build.getHealtPoints()<0){
+                        CommonUtils.points+=build.getLifePoints()/10;
                         list.remove(build);
+                        removedBuild=build;
                     }
                     break;
                 }
@@ -67,7 +75,7 @@ public class BulletController {
                 break;
             }
         }
-        
+        return removedBuild;
     }
     /**
      * @return the listBullets

@@ -8,6 +8,7 @@ package com.war.controller;
 import com.war.model.Build;
 import com.war.model.Bullet;
 import com.war.model.CatalogUnit;
+import com.war.model.Target;
 import com.war.model.Unit;
 import com.war.utils.CommonUtils;
 import java.awt.Point;
@@ -38,7 +39,6 @@ public class UnitController {
             }
             getListEnemies().add(units.getClown(radioX+(int)(Math.random()*100 + 1), radioY +(int)(Math.random()*120 + 20)*count, 2));
             count++;
-            
         }
     }
     
@@ -48,10 +48,9 @@ public class UnitController {
     }
 
     public boolean moveUnit( Unit selected){
-         
         if(selected!= null){
             if(selected.getX()!=selected.getLimit().x && selected.getState()==1 ){
-                if(selected.getLimit().x-selected.getX()>150 ){
+                if(selected.getLimit().x-selected.getX()>150 || selected.getTarget()==null){
                     selected.setX(selected.getX()+ selected.getMoveX());
                 }else{
                     selected.setX(selected.getX()- selected.getMoveX());
@@ -61,7 +60,6 @@ public class UnitController {
                     selected.setY(selected.getY()+ selected.getMoveY());
             }
             if(selected.getTarget() != null ){
-               
                 if(selected.getTarget() instanceof Unit){
                     Unit unitT=(Unit) selected.getTarget();
                      selected.setLimit(new Point(unitT.getX(), unitT.getY()));
@@ -89,8 +87,8 @@ public class UnitController {
                     }
                 }
             }else{
-                       selected.setState(1);
-                       selected.setImage(getImageState(selected.getNameImage(), 1));
+                selected.setState(1);
+                selected.setImage(getImageState(selected.getNameImage(), 1));
             }
             return !(selected.getX()== selected.getLimit().x && selected.getY()== selected.getLimit().y);
         }else{
@@ -115,7 +113,7 @@ public class UnitController {
     
     public void randomMove(Unit unit){
         unit.setMoveCount(unit.getMoveCount()+1);
-        if(unit.getMoveCount()==80){
+        if(unit.getMoveCount()==95){
             unit.setState(1);
             unit.setImage(getImageState(unit.getNameImage(), 1));
             double random=Math.random();
@@ -138,9 +136,11 @@ public class UnitController {
         }
         if(unit.getState()==1 && unit.getX()!=unit.getLimit().x ){
             unit.setX(unit.getX()+ unit.getMoveX());
+            unit.getRatio().setLocation(unit.getX()-unit.getImage().getIconWidth()*2, unit.getY()-unit.getImage().getIconHeight()*2);
         }
         if(unit.getState()==1 && unit.getY()!=unit.getLimit().y ){
             unit.setY(unit.getY()+ unit.getMoveY());
+            unit.getRatio().setLocation(unit.getX()-unit.getImage().getIconWidth()*2, unit.getY()-unit.getImage().getIconHeight()*2);
         }
         if(unit.getX()== unit.getLimit().x && unit.getY()== unit.getLimit().y){
             unit.setState(0);
@@ -162,6 +162,58 @@ public class UnitController {
                 break;
         }
         return new ImageIcon(url);
+    }
+    
+    public Target deleteTargets(Target eliminated){
+        for(Unit unit : getListAllies()){
+            if(unit.getTarget()!=null && unit.getTarget().equals(eliminated)){
+                unit.setTarget(null);
+                unit.setState(0);
+            }
+        }
+        return null;
+    }
+    
+    public void autoAtack(){
+        for(Unit enemy: getListEnemies()){
+            for(Unit allie: getListAllies()){
+                if(enemy.getRatio().contains(allie.getCollisionRec())){
+                    enemy.setLimit(new Point(allie.getX(), allie.getY()));
+                    enemy.setMoveX( enemy.getX()>allie.getX() ? -1 : 1  );
+                    enemy.setMoveY( enemy.getY()>allie.getY() ? -1 : 1  );
+                    enemy.setState(2);
+                    enemy.setTarget(allie);
+                    enemy.setImage(getImageState(enemy.getNameImage(), 1));
+                }else{
+                    enemy.setState(1);
+                    enemy.setTarget(null);
+                }
+            }
+        }
+    }
+    public void atackUnit(){
+        for(Unit enemy: getListEnemies()){
+            if(enemy.getTarget()!= null){
+                if(enemy.getX()!=enemy.getTarget().getX()){
+                    enemy.setX(enemy.getX()+enemy.getMoveX());
+                }
+                if(enemy.getY()!=enemy.getTarget().getY()){
+                    enemy.setY(enemy.getY()+enemy.getMoveY());
+                }
+                for(Unit allie: getListAllies()){
+                    if(allie.getCollisionRec().intersects(enemy.getCollisionRec())){
+                        allie.setHealtPoints(allie.getHealtPoints()-1);
+                        if(allie.getHealtPoints()<0){
+                            getListAllies().remove(allie);
+                            enemy.setTarget(null);
+                            enemy.setState(1);
+                            break;
+                        }
+                    }
+                }
+                enemy.getRatio().setLocation(enemy.getX()-enemy.getImage().getIconWidth()*2, enemy.getY()-enemy.getImage().getIconHeight()*2);
+            }
+        }
     }
     
     /**

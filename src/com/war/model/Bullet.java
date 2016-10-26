@@ -5,7 +5,6 @@
  */
 package com.war.model;
 
-import com.war.utils.CommonUtils;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import javax.swing.ImageIcon;

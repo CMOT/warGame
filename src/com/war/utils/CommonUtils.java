@@ -16,6 +16,8 @@ public class CommonUtils {
     public static int width=0;
     public static int height=0;
     public static double time=0;
+    public static int points=0;
+    
     private CommonUtils(){
         
     }
