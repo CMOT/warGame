@@ -29,6 +29,7 @@ public class Build extends Target{
     }
 
     public Build(String name, int lifePoints, int capacity, int x, int y, String build,int team) {
+        super(x, y, new ImageIcon("images/"+build+".png"));
         this.name = name;
         this.lifePoints = lifePoints;
         this.healtPoints= lifePoints;

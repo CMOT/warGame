@@ -1,0 +1,5 @@
+build/*
+images/*.png
+images/*.gif
+images/units/*.png
+images/units/*.gif

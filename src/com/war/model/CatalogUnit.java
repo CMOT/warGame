@@ -15,23 +15,23 @@ public class CatalogUnit {
     }
     
     public Unit getMarine(int x, int y, int team){
-        return new Marine("Marine", 50, x, y , 8 , "marine"+team, team);
+        return new Marine("Marine", 50, x, y , 8 , "soldado", team, "bala", 80);
     }
     
     public Unit getKratos(int x, int y, int team){
-        return new Marine("Kratos", 100, x, y , 16 , "units/s2", team);
+        return new Marine("Kratos", 100, x, y , 16 , "s2", team, "espada", 80);
     }
     
     public Unit getMasterChief(int x, int y, int team){
-        return new Marine("Master Chief", 70, x, y , 12 , "units/s3", team);
+        return new Marine("Master Chief", 70, x, y , 12 , "soldado", team, "bala", 60);
     }
     
     public Unit getZombie(int x, int y, int team){
-        return new Marine("Momia", 30, x, y , 9 , "units/momia", team);
+        return new Marine("Momia", 30, x, y , 9 , "momia", team, "bala", 80);
     }
     
-    public Unit getWolf(int x, int y, int team){
-        return new Marine("Lobo", 45, x, y , 9 , "units/payaso1", team);
+    public Unit getClown(int x, int y, int team){
+        return new Marine("Clown", 45, x, y , 9 , "payaso", team, "bala", 80);
     }
     
 }

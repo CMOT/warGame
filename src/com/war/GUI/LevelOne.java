@@ -6,8 +6,10 @@
 package com.war.GUI;
 
 import com.war.controller.BuildController;
+import com.war.controller.BulletController;
 import com.war.controller.UnitController;
 import com.war.model.Build;
+import com.war.model.Bullet;
 import com.war.model.Marine;
 import com.war.model.Metropoly;
 import com.war.model.Unit;
@@ -27,6 +29,7 @@ public class LevelOne extends Canvas implements Runnable{
     ImageIcon background;
     private UnitController unitController;
     private BuildController buildController;
+    private BulletController bulletController;
     Thread hilo;
     
     public LevelOne(int width, int height, int difficult){
@@ -34,9 +37,10 @@ public class LevelOne extends Canvas implements Runnable{
         background = new ImageIcon("images/cementerio.png");
         unitController= new UnitController();
         buildController = new BuildController();
-        unitController.fillListEnemies(difficult, width-200, height-400);
+        bulletController= new BulletController();
+        unitController.fillListEnemies(16, width-200, height-400);
         unitController.fillListAllies(100, 300);
-        buildController.fillBuildEnemies(this.getWidth()-140,250, 2);
+        buildController.fillBuildEnemies(this.getWidth()-140,200, 2);
         hilo= new Thread(this);
         hilo.start();
     }
@@ -46,7 +50,7 @@ public class LevelOne extends Canvas implements Runnable{
         super.paint(g);
         Graphics2D g2d=(Graphics2D) g;
         g2d.drawImage(background.getImage(), 0, 0, this.getWidth(), this.getHeight(), this);
-//        g2d.drawImage(new ImageIcon("images/center1.png").getImage(), this.getWidth()-140, 270,  this);
+//        g2d.drawImage(new ImageIcon("images/casapayaso.png").getImage(), this.getWidth()-140, 270,  this);
         for(Build build:getBuildController().getListBuilds() ){
             if(build instanceof Metropoly){
                 Metropoly metro= (Metropoly) build;
@@ -64,6 +68,9 @@ public class LevelOne extends Canvas implements Runnable{
                  Marine marine= (Marine) enemy;
                  marine.paint(g2d);
             }
+        }
+        for(Bullet bullet: bulletController.getListBullets()){
+                 bullet.paint(g2d);
         }
     }
     
@@ -93,19 +100,29 @@ public class LevelOne extends Canvas implements Runnable{
             } catch (InterruptedException ex) {
             }
             for(Unit unit:unitController.getListAllies()){
-                if(unit.isMove()){
-                    unit.setMove(getUnitController().moveUnit( unit));
-                   
-                }
-                if(unit.getBullet().getTarget()!= null && unit.getBullet().getTarget() instanceof Build) {
-                    Build b= (Build) unit.getBullet().getTarget();
-//                    if(unit.getBullet().isShooted() && (b.getX()==unit.getX()  )   ){
-                    if(unit.getBullet().isShooted()){
-                        unit.getBullet().setShooted(getUnitController().unitShooter(unit.getBullet()));
-                    }
+                if(unit.getCountShoot()!=unit.getShootCold()){
+                    unit.setCountShoot(unit.getCountShoot()+1);
                 }
                 
+                if(unit.isMove()){
+                    unit.setMove(getUnitController().moveUnit( unit));
+                }else{
+                    unit.setImage(unitController.getImageState(unit.getNameImage(), 0));
+                }
+                if(unit.getTarget()!= null ) {
+                    Bullet bull=getUnitController().unitShooter(unit);
+                    if(bull!=null){
+                        bulletController.getListBullets().add(bull);
+                    }
+                }
             }
+            for(Unit unit: unitController.getListEnemies()){
+                
+                unitController.randomMove(unit);
+                
+            }
+            bulletController.shootEnemies(unitController.getListEnemies());
+            bulletController.shootBuilds(buildController.getListBuilds());
             repaint();
         }
     }
@@ -137,5 +154,15 @@ public class LevelOne extends Canvas implements Runnable{
     public void setBuildController(BuildController buildController) {
         this.buildController = buildController;
     }
+
+    public BulletController getBulletController() {
+        return bulletController;
+    }
+
+    public void setBulletController(BulletController bulletController) {
+        this.bulletController = bulletController;
+    }
+    
+    
     
 }

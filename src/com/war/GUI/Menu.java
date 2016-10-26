@@ -6,6 +6,7 @@
 package com.war.GUI;
 
 import com.war.controller.MouseController;
+import com.war.utils.CommonUtils;
 import java.awt.Canvas;
 
 /**
@@ -29,6 +30,8 @@ public class Menu extends javax.swing.JFrame {
         initVariables();
     }
     private void initComponents2(){
+        CommonUtils.width=panelCanvas.getWidth();
+        CommonUtils.height= panelCanvas.getHeight();
         groupDifficult.add(radioEasy);
         groupDifficult.add(radioMedium);
         groupDifficult.add(radioHard);

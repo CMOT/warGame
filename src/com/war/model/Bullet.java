@@ -5,6 +5,7 @@
  */
 package com.war.model;
 
+import com.war.utils.CommonUtils;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import javax.swing.ImageIcon;
@@ -18,17 +19,18 @@ public class Bullet {
     private int power;
     private int x;
     private int y;
+    private int moveX;
+    private int moveY;
     private ImageIcon image;
     private Rectangle collisionRec;
     private int team;
     private boolean shooted;
-    private Target target;
+    private double time;
     
     public Bullet(){
-        
     }
 
-    public Bullet(int power, int x, int y, String bullet, int team) {
+    public Bullet(int power, int x, int y, String bullet, int team, int targetX, int targetY) {
         this.power = power;
         this.x = x;
         this.y = y;
@@ -36,17 +38,22 @@ public class Bullet {
         this.collisionRec = new Rectangle(x, y, getImage().getIconWidth(), getImage().getIconHeight());
         this.team= team;
         this.shooted=false;
-        this.target= new Target();
+        this.moveX=targetX;
+        this.moveY=targetY;
+        this.time=0.0;
+        
     }
     public void paint(Graphics2D g){
-        if(isShooted()){
+//        if(isShooted()){
+            g.draw(collisionRec);
             g.drawImage(getImage().getImage(), this.getX(), this.getY(), null);
-        }
-//        else{
-//            x=-10;
-//            y=-10;
-//        }
-        
+            this.x+=4;
+            this.collisionRec.x+=4;
+//            this.x = this.x+ CommonUtils.calcX(Math.abs(this.getMoveY()-(this.getY() ))+30,this.getMoveX()-this.getX(), this.time );
+//            this.y = this.y+ CommonUtils.calcY(Math.abs(this.getMoveY()-(this.getY() ))+30,this.getMoveX()-this.getX(), this.time );
+//            this.collisionRec.x =this.x+ CommonUtils.calcX(Math.abs(this.getMoveY()-(this.getY() ))+30,this.getMoveX()-this.getX(), this.time );
+//            this.collisionRec.y =this.y+ CommonUtils.calcY(Math.abs(this.getMoveY()-(this.getY() ))+30,this.getMoveX()-this.getX(), this.time );
+//            this.time+=.1;
     }
 
     /**
@@ -147,20 +154,28 @@ public class Bullet {
         this.shooted = shooted;
     }
 
-    /**
-     * @return the target
-     */
-    public Target getTarget() {
-        return target;
+    public int getMoveX() {
+        return moveX;
     }
 
-    /**
-     * @param target the target to set
-     */
-    public void setTarget(Target target) {
-        this.target = target;
+    public void setMoveX(int moveX) {
+        this.moveX = moveX;
     }
-    
-    
+
+    public int getMoveY() {
+        return moveY;
+    }
+
+    public void setMoveY(int moveY) {
+        this.moveY = moveY;
+    }
+
+    public double getTime() {
+        return time;
+    }
+
+    public void setTime(double time) {
+        this.time = time;
+    }
    
 }

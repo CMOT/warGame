@@ -16,7 +16,7 @@ public class CatalogBuild {
     
     
     public Build getMetropoly(int x, int y, int team){
-        return new Metropoly("Metropoly", 150, 30 , x, y , "center1", team );
+        return new Metropoly("Metropoly", 150, 30 , x, y , "casapayaso", team );
     }
     
 }

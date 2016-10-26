@@ -31,25 +31,38 @@ public class Unit extends Target{
     private Point limit;
     private int moveX;
     private int moveY;
-    private Bullet bullet;
-
+    private Target target;
+    private int state;
+    private String bulletType;
+    private int shootCold;
+    private int countShoot;
+    private int moveCount;
+    private String nameImage;
+    
     public Unit() {
     }
 
-    public Unit(String name, int lifePoints, int x, int y, int force, String unit, int team) {
+    public Unit(String name, int lifePoints, int x, int y, int force, String unit, int team, String bullet, int shootCold) {
+        super(x, y, new ImageIcon("images/"+unit+".png"));
         this.name = name;
         this.lifePoints = lifePoints;
-        this.healtPoints = lifePoints;
+        this.healtPoints = lifePoints-10;
         this.x = x;
         this.y = y;
         this.force = force;
         this.team=team;
-        this.image= new ImageIcon("images/"+unit+".png");
+        this.image= new ImageIcon("images/units/"+unit+"0.png");
         this.collisionRec=new Rectangle(x, y, getImage().getIconWidth(), getImage().getIconHeight());
-        this.ratio= new Rectangle(getImage().getIconWidth()*3, getImage().getIconHeight()*3);
+        this.ratio= new Rectangle(x-getImage().getIconWidth()*5, y-getImage().getIconWidth()*5, getImage().getIconWidth()*5, getImage().getIconHeight()*3);
         this.move=false;
-        bullet= new Bullet(force, -10, -10, "bala", team);
-        limit = new Point(0,0);
+        this.nameImage= unit;
+        this.bulletType=bullet;
+        this.limit = new Point(0,0);
+        this.target= null;
+        this.shootCold= shootCold;
+        this.countShoot=shootCold;
+        this.state=0;// state 0 is Hold // state 1 is Moving //state 2 is Atacking
+        this.moveCount=0;
     }
     
     public void paint(Graphics2D g){}
@@ -259,21 +272,97 @@ public class Unit extends Target{
     public void setHealtPoints(int healtPoints) {
         this.healtPoints = healtPoints;
     }
-
-    /**
-     * @return the bullet
+     /**
+     * @return the target
      */
-    public Bullet getBullet() {
-        return bullet;
+    public Target getTarget() {
+        return target;
     }
 
     /**
-     * @param bullet the bullet to set
+     * @param target the target to set
      */
-    public void setBullet(Bullet bullet) {
-        this.bullet = bullet;
+    public void setTarget(Target target) {
+        this.target = target;
     }
-    
+
+    /**
+     * @return the state
+     */
+    public int getState() {
+        return state;
+    }
+
+    /**
+     * @param state the state to set
+     */
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    /**
+     * @return the bulletType
+     */
+    public String getBulletType() {
+        return bulletType;
+    }
+
+    /**
+     * @param bulletType the bulletType to set
+     */
+    public void setBulletType(String bulletType) {
+        this.bulletType = bulletType;
+    }
+
+    /**
+     * @return the shootCold
+     */
+    public int getShootCold() {
+        return shootCold;
+    }
+
+    /**
+     * @param shootCold the shootCold to set
+     */
+    public void setShootCold(int shootCold) {
+        this.shootCold = shootCold;
+    }
+
+    /**
+     * @return the countShoot
+     */
+    public int getCountShoot() {
+        return countShoot;
+    }
+
+    /**
+     * @param countShoot the countShoot to set
+     */
+    public void setCountShoot(int countShoot) {
+        this.countShoot = countShoot;
+    }
+
+    public int getMoveCount() {
+        return moveCount;
+    }
+
+    public void setMoveCount(int moveCount) {
+        this.moveCount = moveCount;
+    }
+
+    /**
+     * @return the nameImage
+     */
+    public String getNameImage() {
+        return nameImage;
+    }
+
+    /**
+     * @param nameImage the nameImage to set
+     */
+    public void setNameImage(String nameImage) {
+        this.nameImage = nameImage;
+    }
     
     
 }
