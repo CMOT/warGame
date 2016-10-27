@@ -43,7 +43,10 @@ public class Unit extends Target{
     }
 
     public Unit(String name, int lifePoints, int x, int y, int force, String unit, int team, String bullet, int shootCold) {
-        super(x, y, new ImageIcon("images/units/"+unit+".png"));
+        super(x, y, "/units/"+unit+""+0+".png");
+//        image=;
+//        super(x, y, new ImageIcon(getClass().getResource("/images/soldado0.png")));
+        
         this.name = name;
         this.lifePoints = lifePoints;
         this.healtPoints = lifePoints-10;
@@ -51,9 +54,13 @@ public class Unit extends Target{
         this.y = y;
         this.force = force;
         this.team=team;
-        this.image= new ImageIcon("images/units/"+unit+"0.png");
+        this.image= new ImageIcon(getClass().getResource("/units/"+unit+""+0+".png"));
         this.collisionRec=new Rectangle(x, y, getImage().getIconWidth(), getImage().getIconHeight());
-        this.ratio= new Rectangle(x, y, getImage().getIconWidth()*6, getImage().getIconHeight()*6);
+        if(lifePoints>400){
+            this.ratio= new Rectangle(x, y, getImage().getIconWidth(), getImage().getIconHeight());
+        }else{
+            this.ratio= new Rectangle(x, y, getImage().getIconWidth()*6, getImage().getIconHeight()*6);
+        }
         this.move=false;
         this.nameImage= unit;
         this.bulletType=bullet;

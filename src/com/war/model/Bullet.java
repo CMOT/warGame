@@ -5,6 +5,7 @@
  */
 package com.war.model;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import javax.swing.ImageIcon;
@@ -25,6 +26,8 @@ public class Bullet {
     private int team;
     private boolean shooted;
     private double time;
+    private double angule;
+    private boolean up;
     
     public Bullet(){
     }
@@ -33,21 +36,41 @@ public class Bullet {
         this.power = power;
         this.x = x;
         this.y = y;
-        this.image = new ImageIcon("images/"+bullet+".png");
+        this.image = new ImageIcon(getClass().getResource("/images/"+bullet+".png"));
         this.collisionRec = new Rectangle(x, y, getImage().getIconWidth(), getImage().getIconHeight());
         this.team= team;
         this.shooted=false;
         this.moveX=targetX;
         this.moveY=targetY;
         this.time=0.0;
+        this.angule= Math.random();
+        
         
     }
     public void paint(Graphics2D g){
 //        if(isShooted()){
 //            g.draw(collisionRec);
             g.drawImage(getImage().getImage(), this.getX(), this.getY(), null);
-            this.x+=4;
-            this.collisionRec.x+=4;
+            if(this.team==1){
+                this.x+=5;
+                this.collisionRec.x+=5;
+            }else{
+                this.x-=5;
+                this.collisionRec.x-=5;
+                if(angule>=.5){
+                    this.y+=this.angule*5;
+                    this.collisionRec.y+=this.angule*5;
+                }else{
+                    this.y-=this.angule*5;
+                    this.collisionRec.y-=this.angule*5;
+                }
+                
+            }
+//            if(getTeam()==2){
+//                g.setColor(Color.red);
+    //            g.draw(super.getRatio());
+//                g.draw(getCollisionRec());
+//            }
 //            this.x = this.x+ CommonUtils.calcX(Math.abs(this.getMoveY()-(this.getY() ))+30,this.getMoveX()-this.getX(), this.time );
 //            this.y = this.y+ CommonUtils.calcY(Math.abs(this.getMoveY()-(this.getY() ))+30,this.getMoveX()-this.getX(), this.time );
 //            this.collisionRec.x =this.x+ CommonUtils.calcX(Math.abs(this.getMoveY()-(this.getY() ))+30,this.getMoveX()-this.getX(), this.time );

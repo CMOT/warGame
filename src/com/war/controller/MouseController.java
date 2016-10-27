@@ -9,6 +9,7 @@ import com.war.GUI.LevelOne;
 import com.war.GUI.PanelInfo;
 import com.war.model.Build;
 import com.war.model.Unit;
+import com.war.utils.CommonUtils;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -38,36 +39,58 @@ public class MouseController implements MouseListener {
     @Override
     public void mousePressed(MouseEvent e) {
         if (e.getModifiers() == 16) {
+            CommonUtils.selected=null;
             for (Unit unit : level.getUnitController().getListAllies()) {
                 if (unit.getCollisionRec().contains(e.getPoint())) {
                     selected = unit;
+                    CommonUtils.selected=unit;
                     break;
                 } else {
+                    CommonUtils.selected=null;
                     selected = null;
                 }
             }
-            info.updateInfoUnit(selected);
-            if (selected == null) {
+            if(CommonUtils.selected!= null){
+                info.updateInfoUnit((Unit)CommonUtils.selected);
+            }
+            if ( CommonUtils.selected==null) {
                 for (Unit unit : level.getUnitController().getListEnemies()) {
                     if (unit.getCollisionRec().contains(e.getPoint())) {
                         selected = unit;
+                        CommonUtils.selected=unit;
                         break;
                     } else {
+                        CommonUtils.selected=null;
                         selected = null;
                     }
                 }
-                info.updateInfoUnit(selected);
+                info.updateInfoUnit((Unit)CommonUtils.selected);
             }
-            if (selected == null) {
+            if ( CommonUtils.selected==null) {
                 for (Build build : level.getBuildController().getListBuilds()) {
                     if (build.getCollisionRec().contains(e.getPoint())) {
                         selectedBuild = build;
+                        CommonUtils.selected=build;
                         break;
                     } else {
+                        CommonUtils.selected=null;
                         selectedBuild = null;
                     }
                 }
-                info.updateInfoBuild(selectedBuild);
+                info.updateInfoBuild((Build)CommonUtils.selected);
+            }
+            if ( CommonUtils.selected==null) {
+                for (Build build : level.getBuildController().getListBuildAllies()) {
+                    if (build.getCollisionRec().contains(e.getPoint())) {
+                        selectedBuild = build;
+                        CommonUtils.selected=build;
+                        break;
+                    } else {
+                        CommonUtils.selected=null;
+                        selectedBuild = null;
+                    }
+                }
+                info.updateInfoBuild((Build)CommonUtils.selected);
             }
         } else if (e.getModifiers() == 4 && selected != null) {
             selected.setMove(true);
@@ -92,11 +115,6 @@ public class MouseController implements MouseListener {
                 }
             }
             if (selected.getTarget() != null) {
-//                if(selected.getTarget() instanceof Unit){
-//                    Unit un=(Unit) selected.getTarget();
-//                }else{
-//                    Build bu=(Build) selected.getTarget();
-//                }
                 selected.setLimit(new Point(selected.getTarget().getX(), selected.getTarget().getY()));
                 selected.setMoveX(selected.getTarget().getX() - selected.getX() > 0 ? 1 : -1);
                 selected.setMoveY(selected.getTarget().getY() - selected.getY() > 0 ? 1 : -1);

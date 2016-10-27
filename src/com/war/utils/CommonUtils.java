@@ -5,6 +5,8 @@
  */
 package com.war.utils;
 
+import com.war.model.Target;
+
 /**
  *
  * @author TMK
@@ -16,7 +18,11 @@ public class CommonUtils {
     public static int width=0;
     public static int height=0;
     public static double time=0;
-    public static int points=0;
+    public static int points=1000;
+    public static Target selected= null;
+    public static int timeUnit=0;
+    public static boolean createUnit=false;
+    public static int typeUnit=0;
     
     private CommonUtils(){
         

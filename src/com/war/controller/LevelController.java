@@ -5,6 +5,10 @@
  */
 package com.war.controller;
 
+
+import com.war.GUI.PanelInfo;
+import com.war.utils.CommonUtils;
+
 /**
  *
  * @author TMK
@@ -13,10 +17,14 @@ public class LevelController {
     
     private float timeCount;
     private String time;
+    private int difficult;
+    private boolean bossFree;
     
-    public LevelController(){
+    public LevelController(int difficult){
         this.timeCount=180f;
         time="3:00:00";
+        this.difficult=difficult;
+        bossFree=false;
     }
 
     public void goTime(){
@@ -25,8 +33,14 @@ public class LevelController {
         min=(int)timeCount/60;
         seg=(int)timeCount%60;
         time=min+":"+ (seg<10?"0"+(int)seg :(int)seg);
+        PanelInfo.unitCharge.setValue(CommonUtils.timeUnit);
     }
 
+    public boolean killHouse(){
+        CommonUtils.points+=200;
+        return true;
+    }
+    
     public float getTimeCount() {
         return timeCount;
     }
@@ -41,6 +55,22 @@ public class LevelController {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public int getDifficult() {
+        return difficult;
+    }
+
+    public void setDifficult(int difficult) {
+        this.difficult = difficult;
+    }
+
+    public boolean isBossFree() {
+        return bossFree;
+    }
+
+    public void setBossFree(boolean bossFree) {
+        this.bossFree = bossFree;
     }
     
     

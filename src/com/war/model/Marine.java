@@ -45,11 +45,11 @@ public class Marine extends Unit{
 //        }
         if(super.getTarget()== null && super.getLimit().getX()!= super.getX() || super.getLimit().getY()!= super.getY()){
             if( super.getTeam()!=2){
-                g.drawImage((new ImageIcon("images/point.png")).getImage(), (int)super.getLimit().getX(),(int) super.getLimit().getY(),  null);
+                g.drawImage((new ImageIcon(getClass().getResource("/images/point.png"))).getImage(), (int)super.getLimit().getX(),(int) super.getLimit().getY(),  null);
             }
         }
         if(super.getTarget()!= null){
-                g.setColor(Color.green);
+                g.setColor(Color.red);
                 g.drawRect(super.getTarget().getX(), super.getTarget().getY(), super.getTarget().getImage().getIconWidth(), super.getTarget().getImage().getIconHeight());
         }
         g.drawImage(super.getImage().getImage(), super.getX(), super.getY(), null);

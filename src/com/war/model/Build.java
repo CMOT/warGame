@@ -29,14 +29,16 @@ public class Build extends Target{
     }
 
     public Build(String name, int lifePoints, int capacity, int x, int y, String build,int team) {
-        super(x, y, new ImageIcon("images/builds/"+build+""+0+".png"));
+//        super(x, y, new ImageIcon("images/builds/"+build+""+0+".png"));
+        super(x, y, "/builds/"+build+""+0+".png");
+//        super(x, y, build);
         this.name = name;
         this.lifePoints = lifePoints;
         this.healtPoints= lifePoints;
         this.x = x;
         this.y = y;
         this.team= team;
-        this.image= new ImageIcon("images/builds/"+build+""+0+".png");
+        this.image= new ImageIcon(getClass().getResource("/builds/"+build+""+0+".png"));
         this.collisionRec=new Rectangle(this.x, this.y, getImage().getIconWidth(), getImage().getIconHeight());
         this.capacity= capacity;
     }

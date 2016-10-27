@@ -21,9 +21,10 @@ public class Target {
         
     }
 
-    public Target(int x, int y, ImageIcon image) {
+    public Target(int x, int y, String image) {
         this.x = x;
         this.y = y;
+        this.image= new ImageIcon(getClass().getResource(image));
     }
 
     /**

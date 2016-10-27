@@ -16,11 +16,11 @@ public class CatalogBuild {
     
     
     public Build getMetropoly(int x, int y, int team){
-        return new Metropoly("Fun House", 400, 30 , x, y , "funhouse", team );
+        return new Metropoly("Fun House", 10, 30 , x, y , "funhouse", team );
     }
     
     public Build getTrainningBuild(int x, int y, int team){
-        return new Metropoly("Trainning Build", 100, 30 , x, y , "castillo", team );
+        return new Metropoly("Castle", 100, 30 , x, y , "castillo", team );
     }
     
 }

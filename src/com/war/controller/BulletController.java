@@ -19,17 +19,13 @@ import java.util.ArrayList;
 public class BulletController {
     
     private volatile ArrayList<Bullet> listBullets;
+    private volatile ArrayList<Bullet> listBulletsEnemies;
     
     public BulletController(){
         listBullets= new ArrayList<>();
+        listBulletsEnemies= new ArrayList<>();
     }
     
-    public void addBullet(Bullet bullet){
-        
-        getListBullets().add(bullet);
-        getListBullets().add(new Bullet());
-    }
-
     public Unit shootEnemies(ArrayList<Unit> list){
         boolean removed=false;
         Unit removedUnit= null;
@@ -39,7 +35,8 @@ public class BulletController {
                     unit.setHealtPoints(unit.getHealtPoints()-bullet.getPower());
                     removed=true;
                     if(unit.getHealtPoints()<0){
-                        CommonUtils.points+=unit.getLifePoints()/10;
+                        CommonUtils.points+=unit.getLifePoints();
+//                        CommonUtils.selected=null;
                         list.remove(unit);
                         removedUnit= unit;
                     }
@@ -53,7 +50,65 @@ public class BulletController {
         }
         return removedUnit;
     }
+    public void shootBoss(Unit boss){
+        for(Bullet bullet: getListBullets()){
+            if(bullet.getCollisionRec().intersects(boss.getCollisionRec())){
+                boss.setHealtPoints(boss.getHealtPoints()-bullet.getPower());
+                getListBullets().remove(bullet);
+                break;
+            }
+        }
+    }
     
+     public Unit shootAllies(ArrayList<Unit> list){
+        boolean removed=false;
+        Unit removedUnit= null;
+        for( Bullet bullet :listBulletsEnemies){
+            for(Unit unit:list ){
+                if(bullet.getCollisionRec().intersects(unit.getCollisionRec())){
+                    unit.setHealtPoints(unit.getHealtPoints()-bullet.getPower());
+                    removed=true;
+                    if(unit.getHealtPoints()<0){
+//                        CommonUtils.points+=unit.getLifePoints();
+//                        CommonUtils.selected=null;
+                        list.remove(unit);
+                        removedUnit= unit;
+                    }
+                    break;
+                }
+            }
+            if(removed || bullet.getX()<0){
+                listBulletsEnemies.remove(bullet);
+                break;
+            }
+        }
+        return removedUnit;
+    }
+     
+    public Build shootBuildsAllies(ArrayList<Build> list){
+        boolean removed=false;
+        Build removedBuild=null;
+        for( Bullet bullet :listBulletsEnemies){
+            for(Build build:list ){
+                if(bullet.getCollisionRec().intersects(build.getCollisionRec())){
+                    build.setHealtPoints(build.getHealtPoints()-bullet.getPower());
+                    removed=true;
+                    if(build.getHealtPoints()<0){
+//                        CommonUtils.points+=build.getLifePoints()/10;
+                        list.remove(build);
+                        removedBuild=build;
+                    }
+                    break;
+                }
+            }
+            if(removed || bullet.getX()<0){
+                listBulletsEnemies.remove(bullet);
+                break;
+            }
+        }
+        return removedBuild;
+    }
+     
     public Build shootBuilds(ArrayList<Build> list){
         boolean removed=false;
         Build removedBuild=null;
@@ -89,6 +144,14 @@ public class BulletController {
      */
     public void setListBullets(ArrayList<Bullet> listBullets) {
         this.listBullets = listBullets;
+    }
+
+    public ArrayList<Bullet> getListBulletsEnemies() {
+        return listBulletsEnemies;
+    }
+
+    public void setListBulletsEnemies(ArrayList<Bullet> listBulletsEnemies) {
+        this.listBulletsEnemies = listBulletsEnemies;
     }
     
     
