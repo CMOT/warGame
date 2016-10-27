@@ -166,9 +166,9 @@ public class LevelOne extends Canvas implements Runnable{
             if((eliminated=bulletController.shootAllies(unitController.getListAllies()))!=null ){
 //               eliminated= unitController.deleteTargets(eliminated);
             }
-            if((eliminated=bulletController.shootBuildsAllies(buildController.getListBuildAllies()))!=null){
+//            if((eliminated=bulletController.shootBuildsAllies(buildController.getListBuildAllies()))!=null){
 //                 eliminated= unitController.deleteTargets(eliminated);
-            }
+//            }
 //            for(Build metro: buildController.getListBuilds()){
 //                boolean crear=buildController.equalsGame(metro.getHealtPoints());
 //                if(crear){

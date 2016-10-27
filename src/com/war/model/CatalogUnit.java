@@ -39,7 +39,7 @@ public class CatalogUnit {
     }
     
     public Unit getClownBoss(int x, int y, int team){
-        return new Marine("CLow Bot", 600, x, y , 140 , "payasobot", team, "bomb", 130);
+        return new Marine("CLow Bot", 600, x, y , 140 , "payasobot", team, "bomb", 170);
     }
     
 }

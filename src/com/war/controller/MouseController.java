@@ -114,6 +114,15 @@ public class MouseController implements MouseListener {
                     }
                 }
             }
+            if (selected.getTarget() == null) {
+                Unit boss = level.getUnitController().getBossUnit();
+                    if (boss.getCollisionRec().contains(e.getPoint())) {
+                        selected.setState(1);
+                        selected.setTarget(boss);
+                    } else {
+                        selected.setTarget(null);
+                    }
+            }
             if (selected.getTarget() != null) {
                 selected.setLimit(new Point(selected.getTarget().getX(), selected.getTarget().getY()));
                 selected.setMoveX(selected.getTarget().getX() - selected.getX() > 0 ? 1 : -1);
