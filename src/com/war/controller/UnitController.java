@@ -33,7 +33,7 @@ public class UnitController {
     
     public void fillListEnemies(int size, int radioX, int radioY){
         int count =1;
-        for(int i=0; i < size; i++){
+        for(int i=0; i < 10*size; i++){
             if(count==4){
                 count=1;
             }
@@ -42,9 +42,12 @@ public class UnitController {
         }
     }
     
-    public void fillListAllies(int x, int y){
-        getListAllies().add(units.getKratos(x, y, 1));
-        getListAllies().add(units.getMasterChief(x*2, y+100, 1));
+    public void fillListAllies(int x, int y, int difficult){
+//        getListAllies().add(units.getKratos(x, y, 1));
+//        getListAllies().add(units.getMasterChief(x*2, y+100, 1));
+        for(int i=1; i<= difficult; i++){
+            getListAllies().add(units.getMasterChief(x+(int)(Math.random()*50), (y+20)*i, 1));
+        }
     }
 
     public boolean moveUnit( Unit selected){
@@ -127,20 +130,20 @@ public class UnitController {
             }
             if(unit.getX()<CommonUtils.width-80 && random>.5){
                 unit.setMoveX(1);
-                unit.setLimit(new Point(unit.getX()+ (int)(Math.random()*90), (int)(unit.getY()+randomY*30) ));
+                unit.setLimit(new Point(unit.getX()+ (int)(Math.random()*100), (int)(unit.getY()+randomY*35) ));
             }else{
                 unit.setMoveX(-1);
-                unit.setLimit(new Point(unit.getX()- (int)(Math.random()*90), (int)(unit.getY()-randomY*30) ));
+                unit.setLimit(new Point(unit.getX()- (int)(Math.random()*100), (int)(unit.getY()-randomY*35) ));
             }
             unit.setMoveCount(0);
         }
         if(unit.getState()==1 && unit.getX()!=unit.getLimit().x ){
             unit.setX(unit.getX()+ unit.getMoveX());
-            unit.getRatio().setLocation(unit.getX()-unit.getImage().getIconWidth()*2, unit.getY()-unit.getImage().getIconHeight()*2);
+            unit.getRatio().setLocation(unit.getX()-unit.getImage().getIconWidth()*3, unit.getY()-unit.getImage().getIconHeight()*3);
         }
         if(unit.getState()==1 && unit.getY()!=unit.getLimit().y ){
             unit.setY(unit.getY()+ unit.getMoveY());
-            unit.getRatio().setLocation(unit.getX()-unit.getImage().getIconWidth()*2, unit.getY()-unit.getImage().getIconHeight()*2);
+            unit.getRatio().setLocation(unit.getX()-unit.getImage().getIconWidth()*3, unit.getY()-unit.getImage().getIconHeight()*3);
         }
         if(unit.getX()== unit.getLimit().x && unit.getY()== unit.getLimit().y){
             unit.setState(0);
@@ -200,18 +203,30 @@ public class UnitController {
                 if(enemy.getY()!=enemy.getTarget().getY()){
                     enemy.setY(enemy.getY()+enemy.getMoveY());
                 }
+                boolean died=false;
                 for(Unit allie: getListAllies()){
-                    if(allie.getCollisionRec().intersects(enemy.getCollisionRec())){
+                    if(enemy.getCollisionRec().intersects(allie.getCollisionRec()) || allie.getCollisionRec().contains(enemy.getCollisionRec())){
                         allie.setHealtPoints(allie.getHealtPoints()-1);
-                        if(allie.getHealtPoints()<0){
-                            getListAllies().remove(allie);
+                        if(allie.getHealtPoints()<1){
+//                            getListAllies().remove(allie);
                             enemy.setTarget(null);
                             enemy.setState(1);
-                            break;
+                            died=true;
                         }
                     }
+                    if(died){
+                        for(Unit enemy2: getListEnemies()){
+                            if(enemy2.getTarget()!=null && enemy2.getTarget().equals(allie)){
+                                enemy2.setTarget(null);
+                                enemy2.setState(1);
+                            }
+                        }
+                        getListAllies().remove(allie);
+                        died=false;
+                        break;
+                    }
                 }
-                enemy.getRatio().setLocation(enemy.getX()-enemy.getImage().getIconWidth()*2, enemy.getY()-enemy.getImage().getIconHeight()*2);
+                enemy.getRatio().setLocation(enemy.getX()-enemy.getImage().getIconWidth()*3, enemy.getY()-enemy.getImage().getIconHeight()*3);
             }
         }
     }

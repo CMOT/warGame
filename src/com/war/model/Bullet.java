@@ -44,7 +44,7 @@ public class Bullet {
     }
     public void paint(Graphics2D g){
 //        if(isShooted()){
-            g.draw(collisionRec);
+//            g.draw(collisionRec);
             g.drawImage(getImage().getImage(), this.getX(), this.getY(), null);
             this.x+=4;
             this.collisionRec.x+=4;

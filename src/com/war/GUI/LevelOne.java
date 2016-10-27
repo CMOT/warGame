@@ -16,6 +16,7 @@ import com.war.model.Target;
 import com.war.model.Unit;
 import com.war.utils.CommonUtils;
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -34,6 +35,7 @@ public class LevelOne extends Canvas implements Runnable{
     private UnitController unitController;
     private BuildController buildController;
     private BulletController bulletController;
+//    private LevelController levelController;
     Thread hilo;
     
     public LevelOne(int width, int height, int difficult){
@@ -42,9 +44,10 @@ public class LevelOne extends Canvas implements Runnable{
         unitController= new UnitController();
         buildController = new BuildController();
         bulletController= new BulletController();
-        unitController.fillListEnemies(16, width-200, height-400);
-        unitController.fillListAllies(100, 300);
+        unitController.fillListEnemies(difficult, width-200, height-400);
+        unitController.fillListAllies(100, 100, difficult);
         buildController.fillBuildEnemies(this.getWidth()-140,200, 2);
+//        levelController= new LevelController();
         eliminated= null;
         hilo= new Thread(this);
         hilo.start();
@@ -77,9 +80,11 @@ public class LevelOne extends Canvas implements Runnable{
         for(Bullet bullet: bulletController.getListBullets()){
                  bullet.paint(g2d);
         }
-        Font font= new Font("Arial", Font.ITALIC, 21);
+        Font font= new Font("Arial", Font.ITALIC, 18);
+        g2d.setColor(Color.green);
         g2d.setFont(font);
         g2d.drawString("Points: "+CommonUtils.points, 10, 30);
+//        g2d.drawString("Time: "+levelController.getTime(), CommonUtils.width-150, 30);
     }
     
     @Override
@@ -129,8 +134,6 @@ public class LevelOne extends Canvas implements Runnable{
                 }else{
                     unitController.atackUnit();
                 }
-                
-                
             }
              if((eliminated=bulletController.shootEnemies(unitController.getListEnemies()))!=null ){
                 eliminated= unitController.deleteTargets(eliminated);
@@ -138,6 +141,7 @@ public class LevelOne extends Canvas implements Runnable{
             if((eliminated=bulletController.shootBuilds(buildController.getListBuilds()))!=null){
                  eliminated= unitController.deleteTargets(eliminated);
             }
+//            levelController.goTime();
             repaint();
         }
     }
@@ -177,7 +181,15 @@ public class LevelOne extends Canvas implements Runnable{
     public void setBulletController(BulletController bulletController) {
         this.bulletController = bulletController;
     }
-    
+
+//    public LevelController getLevelController() {
+//        return levelController;
+//    }
+//
+//    public void setLevelController(LevelController levelController) {
+//        this.levelController = levelController;
+//    }
+//    
     
     
 }

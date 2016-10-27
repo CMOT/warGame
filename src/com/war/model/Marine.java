@@ -38,10 +38,11 @@ public class Marine extends Unit{
         g.fillRect(super.getX()+5, super.getY()-8, super.getImage().getIconWidth()-5, 4);
         g.setColor(Color.green);
         g.fillRect(super.getX()+5, super.getY()-8, CommonUtils.getPercent(super.getHealtPoints(), super.getLifePoints(),super.getImage().getIconWidth()-5), 4);
-        if(super.getTeam()==2){
-            g.setColor(Color.red);
-            g.draw(super.getRatio());
-        }
+//        if(super.getTeam()==2){
+//            g.setColor(Color.red);
+//            g.draw(super.getRatio());
+//            g.draw(super.getCollisionRec());
+//        }
         if(super.getTarget()== null && super.getLimit().getX()!= super.getX() || super.getLimit().getY()!= super.getY()){
             if( super.getTeam()!=2){
                 g.drawImage((new ImageIcon("images/point.png")).getImage(), (int)super.getLimit().getX(),(int) super.getLimit().getY(),  null);
