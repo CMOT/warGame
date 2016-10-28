@@ -23,6 +23,7 @@ public class CommonUtils {
     public static int timeUnit=0;
     public static boolean createUnit=false;
     public static int typeUnit=0;
+    public static int difficutl=0;
     
     private CommonUtils(){
         
@@ -55,4 +56,19 @@ public class CommonUtils {
          return (int)( (15*catOp/getHipotenusa(catOp, catAd)*time)-( 9.8*Math.pow(time, 2))/2 );
 //         return (int)( (15*45*time)-( 9.8*Math.pow(time, 2))/2 );
      }
+     
+     public static boolean numberOfBullets(int current, int max, int difficult){
+        switch(difficult){
+            case 1:
+                
+                return (current==max-16 || current==max-10 || current==max-4);
+            case 2:
+                
+                 return (current==max-22 || current==max-16 || current==max-10 || current==max-4);
+            case 3:
+                
+                 return (current==max-26 || current==max-22 || current==max-16 || current==max-10 || current==max-4);
+        }
+        return false;
+    }
 }

@@ -43,13 +43,14 @@ public class LevelOne extends Canvas implements Runnable{
     
     public LevelOne(int width, int height, int difficult){
         this.setBounds(0, 0, width , height);
+        CommonUtils.difficutl=difficult;
         background = new ImageIcon(getClass().getResource("/images/cementerio.png"));
         unitController= new UnitController();
         buildController = new BuildController();
         bulletController= new BulletController();
         unitController.fillListEnemies(difficult, width-200, height-400);
         unitController.fillListAllies(100, 100, difficult);
-        buildController.fillBuildEnemies(this.getWidth()-140,200, 2);
+        buildController.fillBuildEnemies(this.getWidth()-140,200, 2, difficult);
         buildController.fillBuildAllies(30, 200, 1);
         levelController= new LevelController(difficult);
         eliminated= null;
@@ -157,14 +158,14 @@ public class LevelOne extends Canvas implements Runnable{
                 }
             }
             if((eliminated=bulletController.shootEnemies(unitController.getListEnemies()))!=null ){
-               eliminated= unitController.deleteTargets(eliminated);
+               eliminated= unitController.deleteTargets(eliminated, 1);
             }
             if((eliminated=bulletController.shootBuilds(buildController.getListBuilds()))!=null){
-                 eliminated= unitController.deleteTargets(eliminated);
+                 eliminated= unitController.deleteTargets(eliminated, 1);
             }
             
             if((eliminated=bulletController.shootAllies(unitController.getListAllies()))!=null ){
-//               eliminated= unitController.deleteTargets(eliminated);
+               eliminated= unitController.deleteTargets(eliminated, 2);
             }
 //            if((eliminated=bulletController.shootBuildsAllies(buildController.getListBuildAllies()))!=null){
 //                 eliminated= unitController.deleteTargets(eliminated);
@@ -175,6 +176,8 @@ public class LevelOne extends Canvas implements Runnable{
 //                    unitController.createEnemies(metro.getLifePoints()/metro.getHealtPoints()+levelController.getDifficult());
 //                }
 //            }
+
+                
             levelController.goTime();
             if(buildController.createUnit()){
                 unitController.createUnit();
@@ -186,17 +189,21 @@ public class LevelOne extends Canvas implements Runnable{
             if(unitController.getBossUnit()!= null){
                 bulletController.shootBoss(unitController.getBossUnit());
                 unitController.moveBoss();
-                Bullet bull=unitController.bossShoot();
+                Bullet bull=unitController.bossShoot(levelController.getDifficult());
                 if(bull!=null){
                     bulletController.getListBulletsEnemies().add(bull);
+                }
+                boolean crear=buildController.equalsGame(unitController.getBossUnit().getHealtPoints());
+                if(crear){
+                    unitController.createEnemies(unitController.getBossUnit().getLifePoints()/unitController.getBossUnit().getHealtPoints(), unitController.getBossUnit().getCollisionRec().getLocation());
                 }
                 if(unitController.getBossUnit().getHealtPoints()<0){
                     unitController.setBossUnit(null);
                 }
             }
             if(unitController.getBossUnit()==null && levelController.isBossFree()){
-                runThread=false;
                 JOptionPane.showMessageDialog(null, "You Win");
+                runThread=false;
             }
             repaint();
         }

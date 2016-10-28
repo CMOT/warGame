@@ -23,11 +23,11 @@ public class CatalogUnit {
     }
     
     public Unit getMasterChief(int x, int y, int team){
-        return new Marine("Master Chief", 250, x, y , 15 , "soldado", team, "bala", 40);
+        return new Marine("Master Chief", 250, x, y , 15 , "soldadon", team, "bala", 40);
     }
     
     public Unit getAmetrallador(int x, int y, int team){
-        return new Marine("Ametrallador", 200, x, y , 9 , "ametrallador", team, "metralleta", 60);
+        return new Marine("Tanque", 350, x, y , 11 , "tanque", team, "metralleta", 60);
     }
     
     public Unit getZombie(int x, int y, int team){
@@ -39,7 +39,7 @@ public class CatalogUnit {
     }
     
     public Unit getClownBoss(int x, int y, int team){
-        return new Marine("CLow Bot", 600, x, y , 140 , "payasobot", team, "bomb", 170);
+        return new Marine("CLow Bot", 600, x, y , 140 , "payasobot", team, "bomb", 130);
     }
     
 }

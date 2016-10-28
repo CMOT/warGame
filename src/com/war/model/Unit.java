@@ -49,7 +49,7 @@ public class Unit extends Target{
         
         this.name = name;
         this.lifePoints = lifePoints;
-        this.healtPoints = lifePoints-10;
+        this.healtPoints = lifePoints;
         this.x = x;
         this.y = y;
         this.force = force;

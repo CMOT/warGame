@@ -124,7 +124,7 @@ public class PanelInfo extends javax.swing.JPanel {
         });
 
         lblUnit3.setBackground(new java.awt.Color(204, 204, 204));
-        lblUnit3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/units/ametrallador0.png"))); // NOI18N
+        lblUnit3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/units/tanque0.png"))); // NOI18N
         lblUnit3.setText("Cost: 180 Points");
         lblUnit3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblUnit3.addMouseListener(new java.awt.event.MouseAdapter() {

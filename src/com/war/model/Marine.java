@@ -16,13 +16,14 @@ import javax.swing.ImageIcon;
  */
 public class Marine extends Unit{
     
-    
+    ImageIcon flecha;
     public Marine() {
         super();
     }
     
     public Marine(String name, int lifePoints, int x, int y, int force, String unit, int team, String bullet, int shootCold){
         super(name, lifePoints, x, y, force, unit, team, bullet, shootCold);
+        flecha= new ImageIcon(getClass().getResource("/images/flecha.gif"));
     }
     
     @Override
@@ -51,6 +52,9 @@ public class Marine extends Unit{
         if(super.getTarget()!= null){
                 g.setColor(Color.red);
                 g.drawRect(super.getTarget().getX(), super.getTarget().getY(), super.getTarget().getImage().getIconWidth(), super.getTarget().getImage().getIconHeight());
+        }
+        if(CommonUtils.selected!= null && CommonUtils.selected.equals(this) && super.getTeam()==1){
+            g.drawImage(flecha.getImage(), super.getX(), super.getY()-30 , null);
         }
         g.drawImage(super.getImage().getImage(), super.getX(), super.getY(), null);
     }

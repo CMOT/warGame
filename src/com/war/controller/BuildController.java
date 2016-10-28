@@ -30,7 +30,7 @@ public class BuildController {
         count=1;
     }
     
-    public void fillBuildEnemies(int x, int y, int team){
+    public void fillBuildEnemies(int x, int y, int team, int difficult){
         getListBuilds().add(catalog.getMetropoly(x, y, team));
     }
     
@@ -67,7 +67,7 @@ public class BuildController {
     }
             
     public boolean equalsGame(int points){
-        if(points <= 350 && count ==1){
+        if(points <= 500 && count ==1){
             count++;
             return true;
         }else if(  points <= 300 && count==2){
@@ -83,6 +83,7 @@ public class BuildController {
             count++;
             return true;
         }else{
+            
             return false;
         }
         

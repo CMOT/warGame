@@ -52,17 +52,17 @@ public class Bullet {
 //            g.draw(collisionRec);
             g.drawImage(getImage().getImage(), this.getX(), this.getY(), null);
             if(this.team==1){
-                this.x+=5;
-                this.collisionRec.x+=5;
+                this.x+=4;
+                this.collisionRec.x+=4;
             }else{
-                this.x-=3;
-                this.collisionRec.x-=3;
+                this.x-=6;
+                this.collisionRec.x-=6;
                 if(angule>=.5){
-                    this.y+=this.angule*3;
-                    this.collisionRec.y+=this.angule*3;
+                    this.y+=this.angule*5;
+                    this.collisionRec.y+=this.angule*5;
                 }else{
-                    this.y-=this.angule*3;
-                    this.collisionRec.y-=this.angule*3;
+                    this.y-=this.angule*5;
+                    this.collisionRec.y-=this.angule*5;
                 }
                 
             }

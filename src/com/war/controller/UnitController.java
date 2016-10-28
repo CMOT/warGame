@@ -63,7 +63,15 @@ public class UnitController {
                 }
             }
             if(!(selected.getY() >= selected.getLimit().y+2 && selected.getY()<=selected.getLimit().y+8 ) && selected.getState()==1){
-                    selected.setY(selected.getY()+ selected.getMoveY());
+                    if(selected.getY()>0 && selected.getY()<CommonUtils.height-20){
+                        selected.setY(selected.getY()+ selected.getMoveY());
+                    }else {
+                        if(selected.getY()>CommonUtils.height-20){
+                            selected.setY(selected.getY()-1);
+                        }else{
+                            selected.setY(selected.getY()+1);
+                        }
+                    }
             }
             if(selected.getTarget() != null ){
                 if(selected.getTarget() instanceof Unit){
@@ -105,7 +113,7 @@ public class UnitController {
     public Bullet unitShooter(Unit shooted){
         Bullet bullet= null;
         if(shooted.getState()==2 && shooted.getTarget()!=null){
-            if(shooted.getLimit().x-shooted.getX()<180 ){
+            if(shooted.getLimit().x-shooted.getX()<180 && shooted.getX()>0 ){
                    shooted.setX(shooted.getX()- 1);
                    shooted.setImage(getImageState(shooted.getNameImage(), 1));
             }
@@ -130,6 +138,7 @@ public class UnitController {
     }
     
     public void randomMove(Unit unit, int difficult){
+        
         unit.setMoveCount(unit.getMoveCount()+1);
         if(unit.getMoveCount()==  getLimit(difficult)){
             unit.setState(1);
@@ -139,32 +148,35 @@ public class UnitController {
             if(randomY>.5  && unit.getY()<CommonUtils.height-80 ){
                 unit.setMoveY(1); 
             }else{
-                if(unit.getY()>40)
-                unit.setMoveY(-1);
+                if(unit.getY()>40){
+                    unit.setMoveY(-1);
+                }else{
+                    unit.setMoveY(1);
+                }
             }
-            if(unit.getX()<CommonUtils.width-80 && random>.5){
+            if(unit.getX()<CommonUtils.width-100 && random>.5){
                 unit.setMoveX(1);
-                unit.setLimit(new Point(unit.getX()+ (int)(Math.random()*100), (int)(unit.getY()+randomY*35) ));
+                unit.setLimit(new Point(unit.getX()+ (int)(Math.random()*100), (int)(unit.getY()+Math.random()*35) ));
             }else{
                 if(unit.getX()>40){
                     unit.setMoveX(-1);
-                    unit.setLimit(new Point(unit.getX()- (int)(Math.random()*100), (int)(unit.getY()-randomY*35) ));
+                    unit.setLimit(new Point(unit.getX()- (int)(Math.random()*100), (int)(unit.getY()-Math.random()*35) ));
                 }else{
                     unit.setMoveX(1);
-                    unit.setLimit(new Point(unit.getX()+ (int)(Math.random()*100), (int)(unit.getY()+randomY*35) ));
+                    unit.setLimit(new Point(unit.getX()+ (int)(Math.random()*100), (int)(unit.getY()+Math.random()*35) ));
                 }
             }
             unit.setMoveCount(0);
         }
         if(unit.getState()==1 && unit.getX()!=unit.getLimit().x ){
-            unit.setX(unit.getX()+ unit.getMoveX());
-            unit.getRatio().setLocation(unit.getX()-unit.getImage().getIconWidth()*3, unit.getY()-unit.getImage().getIconHeight()*3);
+                unit.setX(unit.getX()+ unit.getMoveX());
+                unit.getRatio().setLocation(unit.getX()-unit.getImage().getIconWidth()*3, unit.getY()-unit.getImage().getIconHeight()*3);
         }
         if(unit.getState()==1 && unit.getY()!=unit.getLimit().y ){
-            unit.setY(unit.getY()+ unit.getMoveY());
-            unit.getRatio().setLocation(unit.getX()-unit.getImage().getIconWidth()*3, unit.getY()-unit.getImage().getIconHeight()*3);
+                unit.setY(unit.getY()+ unit.getMoveY());
+                unit.getRatio().setLocation(unit.getX()-unit.getImage().getIconWidth()*3, unit.getY()-unit.getImage().getIconHeight()*3);
         }
-        if(unit.getX()== unit.getLimit().x && unit.getY()== unit.getLimit().y){
+        if((unit.getX()== unit.getLimit().x && unit.getY()== unit.getLimit().y)){
             unit.setState(0);
             unit.setImage(getImageState(unit.getNameImage(), 0));
         }
@@ -198,12 +210,22 @@ public class UnitController {
         return new ImageIcon(getClass().getResource(url));
     }
     
-    public Target deleteTargets(Target eliminated){
-        for(Unit unit : getListAllies()){
-            if(unit.getTarget()!=null && unit.getTarget().equals(eliminated)){
-                unit.setTarget(null);
-                unit.setLimit(new Point(unit.getX(), unit.getY()-12));
-                unit.setState(1);
+    public Target deleteTargets(Target eliminated, int team){
+        if(team==1){
+            for(Unit unit : getListAllies()){
+                if(unit.getTarget()!=null && unit.getTarget().equals(eliminated)){
+                    unit.setTarget(null);
+                    unit.setLimit(new Point(unit.getX(), unit.getY()-15));
+                    unit.setState(1);
+                }
+            }
+        }else{
+            for(Unit unit : getListEnemies()){
+                if(unit.getTarget()!=null && unit.getTarget().equals(eliminated)){
+                    unit.setTarget(null);
+                    unit.setLimit(new Point(unit.getX(), unit.getY()-12));
+                    unit.setState(1);
+                }
             }
         }
 //        CommonUtils.selected=null;
@@ -214,7 +236,7 @@ public class UnitController {
 //        for(Unit enemy: getListEnemies()){
             for(Unit allie: getListAllies()){
                 if(enemy.getRatio().contains(allie.getCollisionRec())){
-                    enemy.setLimit(new Point(allie.getX(), allie.getY()-4));
+                    enemy.setLimit(new Point(allie.getX(), allie.getY()-5));
                     enemy.setMoveX( enemy.getX()>allie.getX() ? -1 : 1  );
                     enemy.setMoveY( enemy.getY()>allie.getY() ? -1 : 1  );
                     enemy.setState(2);
@@ -283,6 +305,7 @@ public class UnitController {
             default:
                 sold=units.getMasterChief(30, 200, 1);
         }
+        System.out.println("Se creo una unidad: "+ CommonUtils.typeUnit);
         if(sold!=null){
             sold.setLimit(new Point(30 +(int)(Math.random()*60), 50 + (int)(Math.random()*250) ));
             sold.setMove(true);
@@ -294,10 +317,12 @@ public class UnitController {
         }
         
     }
-    public void createEnemies(int size){
+    public void createEnemies(int size, Point out){
+        System.out.println("Crea a: "+size+ " en el punto x: " +out.x + " en y: "+ out.y);
         for(int i=1; i<= size*2; i++){
-            sold= units.getClown(CommonUtils.width-100, 200, 2);
-            sold.setLimit(new Point(CommonUtils.width -(int)(Math.random()*60+40), 100 + (int)(Math.random()*200) ));
+            System.out.println("ciclo de creacion");
+            sold= units.getClown(out.x, out.y, 2);
+            sold.setLimit(new Point((int)(out.getX()-(Math.random()*30)), (int)(out.getY()+(Math.random()*30)) ));
             sold.setMove(true);
             sold.setState(1);
             sold.setMoveX(sold.getLimit().getX() - sold.getX() > 0 ? 1 : -1);
@@ -321,7 +346,11 @@ public class UnitController {
             double randomY=Math.random();
 //            bossUnit.setMoveX(1);
             if(randomY>.5  && bossUnit.getY()<CommonUtils.height-80 ){
-                bossUnit.setMoveY(1); 
+                if(bossUnit.getY()>50){
+                    
+                }else{
+                    bossUnit.setMoveY(1); 
+                }
             }else{
                 if(bossUnit.getY()>40)
                 bossUnit.setMoveY(-1);
@@ -330,7 +359,7 @@ public class UnitController {
                 bossUnit.setMoveX(1);
                 bossUnit.setLimit(new Point(bossUnit.getX()+ (int)(Math.random()*100), (int)(bossUnit.getY()+randomY*35) ));
             }else{
-                if(bossUnit.getX()>40){
+                if(bossUnit.getX()>CommonUtils.width/2){
                     bossUnit.setMoveX(-1);
                     bossUnit.setLimit(new Point(bossUnit.getX()- (int)(Math.random()*100), (int)(bossUnit.getY()-randomY*35) ));
                 }else{
@@ -354,11 +383,11 @@ public class UnitController {
         }
     }
     
-    public Bullet bossShoot(){
+    public Bullet bossShoot(int difficult){
         Bullet bullet=null;
          if(bossUnit.getCountShoot()<=bossUnit.getShootCold()  ){
             bossUnit.setCountShoot(bossUnit.getCountShoot()+1);
-            if(bossUnit.getCountShoot()==bossUnit.getShootCold()-16 || bossUnit.getCountShoot()==bossUnit.getShootCold()-10 || bossUnit.getCountShoot()==bossUnit.getShootCold()-4){
+            if(CommonUtils.numberOfBullets(bossUnit.getCountShoot(), bossUnit.getShootCold(), difficult)){
                 bullet= new Bullet((int)bossUnit.getForce(), bossUnit.getX()+10, bossUnit.getY()+20, bossUnit.getBulletType(), bossUnit.getTeam(), 0, 0);
                 if(bossUnit.getCountShoot()==bossUnit.getShootCold() ){
                     bossUnit.setCountShoot(0);
@@ -370,6 +399,21 @@ public class UnitController {
         return bullet;
     }
     
+    
+//    public boolean numberOfBullets(int current, int max, int difficult){
+//        switch(difficult){
+//            case 1:
+//                
+//                return (current==max-16 || current==max-10 || current==max-4);
+//            case 2:
+//                
+//                 return (current==max-22 || current==max-16 || current==max-10 || current==max-4);
+//            case 3:
+//                
+//                 return (current==max-26 || current==max-22 || current==max-16 || current==max-10 || current==max-4);
+//        }
+//        return false;
+//    }
     /**
      * @return the listEnemies
      */
