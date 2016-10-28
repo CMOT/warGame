@@ -36,11 +36,10 @@ public class UnitController {
     
     public void fillListEnemies(int size, int radioX, int radioY){
         int count =1;
-        for(int i=0; i < 10*size; i++){
+        for(int i=0; i < 12*size; i++){
             if(count==4){
                 count=1;
             }
-//            volatile Unit clown;
             clown  =units.getClown(radioX+(int)(Math.random()*100 + 1), radioY +(int)(Math.random()*120 + 20)*count, 2);
             getListEnemies().add(clown);
             count++;
@@ -48,8 +47,6 @@ public class UnitController {
     }
     
     public void fillListAllies(int x, int y, int difficult){
-//        getListAllies().add(units.getKratos(x, y, 1));
-//        getListAllies().add(units.getMasterChief(x*2, y+100, 1));
         for(int i=1; i<= difficult; i++){
             sold=units.getMasterChief(x+(int)(Math.random()*50), (y+20)*i, 1);
             getListAllies().add(sold);
@@ -58,22 +55,22 @@ public class UnitController {
 
     public boolean moveUnit( Unit selected){
         if(selected!= null){
-            if(selected.getX()!=selected.getLimit().x && selected.getState()==1 ){
+            if(!(selected.getX() >= selected.getLimit().x-2 && selected.getX()<=selected.getLimit().x+2 ) && selected.getState()==1 ){
                 if(selected.getLimit().x-selected.getX()>150 || selected.getTarget()==null){
                     selected.setX(selected.getX()+ selected.getMoveX());
                 }else{
                     selected.setX(selected.getX()- selected.getMoveX());
                 }
             }
-            if(selected.getY()!=selected.getLimit().y && selected.getState()==1){
+            if(!(selected.getY() >= selected.getLimit().y+2 && selected.getY()<=selected.getLimit().y+8 ) && selected.getState()==1){
                     selected.setY(selected.getY()+ selected.getMoveY());
             }
             if(selected.getTarget() != null ){
                 if(selected.getTarget() instanceof Unit){
                     Unit unitT=(Unit) selected.getTarget();
-                     selected.setLimit(new Point(unitT.getX(), unitT.getY()));
-                     selected.setMoveX(unitT.getX() - selected.getX() > 0 ? 1 : -1);
-                     selected.setMoveY(unitT.getY() - selected.getY() > 0 ? 1 : -1);
+                     selected.setLimit(new Point(unitT.getX(), unitT.getY()+4));
+                     selected.setMoveX(unitT.getX() - selected.getX() > 0 ? 2 : -2);
+                     selected.setMoveY(unitT.getY() - selected.getY() > 0 ? 2 : -2);
                     if( CommonUtils.isCloseToThePoint(selected.getY(), unitT.getY(), unitT.getImage().getIconHeight())){
                        selected.setState(2);
                        selected.setImage(getImageState(selected.getNameImage(), 2));
@@ -84,9 +81,9 @@ public class UnitController {
                 }else
                 if(selected.getTarget() instanceof Build){
                     Build buildT=(Build) selected.getTarget();
-                     selected.setLimit(new Point(buildT.getX(), buildT.getY()));
-                     selected.setMoveX(buildT.getX() - selected.getX() > 0 ? 1 : -1);
-                     selected.setMoveY(buildT.getY() - selected.getY() > 0 ? 1 : -1);
+                     selected.setLimit(new Point(buildT.getX(), buildT.getY()+4));
+                     selected.setMoveX(buildT.getX() - selected.getX() > 0 ? 2 : -2);
+                     selected.setMoveY(buildT.getY() - selected.getY() > 0 ? 2 : -2);
                     if( CommonUtils.isCloseToThePoint(selected.getY(), buildT.getY(), buildT.getImage().getIconHeight())){
                        selected.setState(2);
                        selected.setImage(getImageState(selected.getNameImage(), 2));
@@ -99,7 +96,7 @@ public class UnitController {
                 selected.setState(1);
                 selected.setImage(getImageState(selected.getNameImage(), 1));
             }
-            return !(selected.getX()== selected.getLimit().x && selected.getY()== selected.getLimit().y);
+            return !((selected.getX() >= selected.getLimit().x-2 && selected.getX()<=selected.getLimit().x+2 ) && (selected.getY() >= selected.getLimit().y+2 && selected.getY()<=selected.getLimit().y+8 ));
         }else{
             return false;
         }
@@ -108,29 +105,26 @@ public class UnitController {
     public Bullet unitShooter(Unit shooted){
         Bullet bullet= null;
         if(shooted.getState()==2 && shooted.getTarget()!=null){
-            
-                if(shooted.getLimit().x-shooted.getX()<180 ){
-                       shooted.setX(shooted.getX()- 1);
-                       shooted.setImage(getImageState(shooted.getNameImage(), 1));
+            if(shooted.getLimit().x-shooted.getX()<180 ){
+                   shooted.setX(shooted.getX()- 1);
+                   shooted.setImage(getImageState(shooted.getNameImage(), 1));
+            }
+            if(shooted.getBulletType().equalsIgnoreCase("bala") || shooted.getBulletType().equalsIgnoreCase("espada")){
+                if(shooted.getCountShoot()==shooted.getShootCold()){
+                        bullet= new Bullet((int)shooted.getForce(), shooted.getX()+5, shooted.getY()+5, shooted.getBulletType(), shooted.getTeam(), shooted.getTarget().getX(), shooted.getTarget().getY());
+                        shooted.setCountShoot(0);
                 }
-                if(shooted.getBulletType().equalsIgnoreCase("bala") || shooted.getBulletType().equalsIgnoreCase("espada")){
-                    if(shooted.getCountShoot()==shooted.getShootCold()){
-                            bullet= new Bullet((int)shooted.getForce(), shooted.getX()+5, shooted.getY()+5, shooted.getBulletType(), shooted.getTeam(), shooted.getTarget().getX(), shooted.getTarget().getY());
+            }else{
+                if(shooted.getCountShoot()>=shooted.getShootCold() && shooted.getCountShoot()<=shooted.getShootCold()+16 ){
+                    shooted.setCountShoot(shooted.getCountShoot()+1);
+                    if(shooted.getCountShoot()==shooted.getShootCold()+5 || shooted.getCountShoot()==shooted.getShootCold()+11 || shooted.getCountShoot()==shooted.getShootCold()+17){
+                        bullet= new Bullet((int)shooted.getForce(), shooted.getX()+5, shooted.getY()+10, shooted.getBulletType(), shooted.getTeam(), shooted.getTarget().getX(), shooted.getTarget().getY());
+                        if(shooted.getCountShoot()==shooted.getShootCold()+17 ){
                             shooted.setCountShoot(0);
-    //                    bullet= new Bullet((int)shooted.getForce(), shooted.getX()+5, shooted.getY()+5, shooted.getBulletType(), shooted.getTeam(), shooted.getTarget().getX(), shooted.getTarget().getY());
-    //                    shooted.setCountShoot(0);
-                    }
-                }else{
-                    if(shooted.getCountShoot()>=shooted.getShootCold() && shooted.getCountShoot()<=shooted.getShootCold()+16 ){
-                        shooted.setCountShoot(shooted.getCountShoot()+1);
-                        if(shooted.getCountShoot()==shooted.getShootCold()+5 || shooted.getCountShoot()==shooted.getShootCold()+11 || shooted.getCountShoot()==shooted.getShootCold()+17){
-                            bullet= new Bullet((int)shooted.getForce(), shooted.getX()+5, shooted.getY()+5, shooted.getBulletType(), shooted.getTeam(), shooted.getTarget().getX(), shooted.getTarget().getY());
-                            if(shooted.getCountShoot()==shooted.getShootCold()+17 ){
-                                shooted.setCountShoot(0);
-                            }
                         }
                     }
                 }
+            }
         }
         return bullet;
     }
@@ -142,7 +136,6 @@ public class UnitController {
             unit.setImage(getImageState(unit.getNameImage(), 1));
             double random=Math.random();
             double randomY=Math.random();
-//            unit.setMoveX(1);
             if(randomY>.5  && unit.getY()<CommonUtils.height-80 ){
                 unit.setMoveY(1); 
             }else{
@@ -209,7 +202,7 @@ public class UnitController {
         for(Unit unit : getListAllies()){
             if(unit.getTarget()!=null && unit.getTarget().equals(eliminated)){
                 unit.setTarget(null);
-                unit.setLimit(new Point(unit.getX(), unit.getY()));
+                unit.setLimit(new Point(unit.getX(), unit.getY()-12));
                 unit.setState(1);
             }
         }
@@ -221,7 +214,7 @@ public class UnitController {
 //        for(Unit enemy: getListEnemies()){
             for(Unit allie: getListAllies()){
                 if(enemy.getRatio().contains(allie.getCollisionRec())){
-                    enemy.setLimit(new Point(allie.getX(), allie.getY()));
+                    enemy.setLimit(new Point(allie.getX(), allie.getY()-4));
                     enemy.setMoveX( enemy.getX()>allie.getX() ? -1 : 1  );
                     enemy.setMoveY( enemy.getY()>allie.getY() ? -1 : 1  );
                     enemy.setState(2);
@@ -241,7 +234,7 @@ public class UnitController {
                 if(enemy.getX()!=enemy.getTarget().getX()){
                     enemy.setX(enemy.getX()+enemy.getMoveX());
                 }
-                if(enemy.getY()!=enemy.getTarget().getY()){
+                if(  !(enemy.getY() <= enemy.getTarget().getY()+5 &&  enemy.getY()>=enemy.getTarget().getY()-5)  ){
                     enemy.setY(enemy.getY()+enemy.getMoveY());
                 }
                 boolean died=false;
@@ -294,8 +287,8 @@ public class UnitController {
             sold.setLimit(new Point(30 +(int)(Math.random()*60), 50 + (int)(Math.random()*250) ));
             sold.setMove(true);
             sold.setState(1);
-            sold.setMoveX(sold.getLimit().getX() - sold.getX() > 0 ? 1 : -1);
-            sold.setMoveY(sold.getLimit().getY() - sold.getY() > 0 ? 1 : -1);
+            sold.setMoveX(sold.getLimit().getX() - sold.getX() > 0 ? 2 : -2);
+            sold.setMoveY(sold.getLimit().getY() - sold.getY() > 0 ? 2 : -2);
             getListAllies().add(sold);
             sold=null;
         }
@@ -363,13 +356,9 @@ public class UnitController {
     
     public Bullet bossShoot(){
         Bullet bullet=null;
-        System.out.println("algo");
          if(bossUnit.getCountShoot()<=bossUnit.getShootCold()  ){
-             System.out.println("entro al mayor que del conteo ");
             bossUnit.setCountShoot(bossUnit.getCountShoot()+1);
-             System.out.println("Cantidad: "+bossUnit.getCountShoot() );
             if(bossUnit.getCountShoot()==bossUnit.getShootCold()-16 || bossUnit.getCountShoot()==bossUnit.getShootCold()-10 || bossUnit.getCountShoot()==bossUnit.getShootCold()-4){
-                System.out.println("se metio a una bala creada");
                 bullet= new Bullet((int)bossUnit.getForce(), bossUnit.getX()+10, bossUnit.getY()+20, bossUnit.getBulletType(), bossUnit.getTeam(), 0, 0);
                 if(bossUnit.getCountShoot()==bossUnit.getShootCold() ){
                     bossUnit.setCountShoot(0);

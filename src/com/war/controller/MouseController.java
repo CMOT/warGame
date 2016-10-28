@@ -94,6 +94,7 @@ public class MouseController implements MouseListener {
             }
         } else if (e.getModifiers() == 4 && selected != null) {
             selected.setMove(true);
+            selected.setTarget(null);
             for (Unit unit : level.getUnitController().getListEnemies()) {
                 if (unit.getCollisionRec().contains(e.getPoint())) {
                     selected.setState(1);
@@ -126,13 +127,13 @@ public class MouseController implements MouseListener {
                 }
             }
             if (selected.getTarget() != null) {
-                selected.setLimit(new Point(selected.getTarget().getX(), selected.getTarget().getY()));
+                selected.setLimit(new Point(selected.getTarget().getX(), selected.getTarget().getY()+4));
                 selected.setMoveX(selected.getTarget().getX() - selected.getX() > 0 ? 2 : 2);
-                selected.setMoveY(selected.getTarget().getY() - selected.getY() > 0 ? 1 : -1);
+                selected.setMoveY(selected.getTarget().getY() - selected.getY() > 0 ? 2 : -2);
             }else{
                  selected.setLimit(e.getPoint());
                  selected.setMoveX(e.getX() - selected.getX() > 0 ? 2 : -2);
-                 selected.setMoveY(e.getY() - selected.getY() > 0 ? 1 : -1);
+                 selected.setMoveY(e.getY() - selected.getY() > 0 ? 2 : -2);
             }
         }
     }

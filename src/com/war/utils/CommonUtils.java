@@ -18,7 +18,7 @@ public class CommonUtils {
     public static int width=0;
     public static int height=0;
     public static double time=0;
-    public static int points=1000;
+    public static int points=300;
     public static Target selected= null;
     public static int timeUnit=0;
     public static boolean createUnit=false;
@@ -31,7 +31,7 @@ public class CommonUtils {
      public static boolean isCloseToThePoint(int y1, int y2, int size){
         if(y1==y2){
             return true;
-        }else if(y1  < y2+size-(size/3) && y1 > y2+6){
+        }else if(y1  < y2+size-(size/4) && y1 > y2){
             return true;
         }else{
             return false;

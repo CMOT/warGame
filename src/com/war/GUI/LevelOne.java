@@ -100,7 +100,7 @@ public class LevelOne extends Canvas implements Runnable{
         g2d.setColor(Color.green);
         g2d.setFont(font);
         g2d.drawString("Points: "+CommonUtils.points, 10, 30);
-        g2d.drawString("Time: "+levelController.getTime(), CommonUtils.width-150, 30);
+//        g2d.drawString("Time: "+levelController.getTime(), CommonUtils.width-150, 30);
     }
     
     @Override
