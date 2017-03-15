@@ -15,7 +15,7 @@ public class CatalogUnit {
     }
     
     public Unit getMarine(int x, int y, int team){
-        return new Marine("Marine", 50, x, y , 8 , "soldado", team, "bala", 80);
+        return new Marine("Marine", 100, x, y , 30 , "soldado", team, "bala", 80);
     }
     
     public Unit getKratos(int x, int y, int team){
@@ -31,7 +31,11 @@ public class CatalogUnit {
     }
     
     public Unit getMomia(int x, int y, int team){
-        return new Marine("Momia", 30, x, y , 9 , "momia", team, "bala", 80);
+        return new Marine("Momia", 50, x, y , 4 , "momia", team, "bala", 80);
+    }
+    
+    public Unit getVampiro(int x, int y, int team){
+        return new Marine("Momia", 80, x, y , 10 , "momia", team, "bala", 80);
     }
     
     public Unit getClown(int x, int y, int team){

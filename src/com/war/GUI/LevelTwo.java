@@ -35,10 +35,6 @@ public class LevelTwo extends Level implements Runnable{
     ImageIcon background;
     Target eliminated;
     boolean runThread;
-//    private UnitController unitController;
-//    private BuildController super.getBuildController();
-//    private BulletController bulletController;
-//    private LevelController super.getLevelController();
     Thread hilo;
     
     public LevelTwo(int width, int height, int difficult){
@@ -205,6 +201,7 @@ public class LevelTwo extends Level implements Runnable{
             if(super.getUnitController().getBossUnit()==null && super.getLevelController().isBossFree()){
                 JOptionPane.showMessageDialog(null, "You Win");
                 runThread=false;
+                super.getLevelController().levelUp(this);
                 
             }
             repaint();

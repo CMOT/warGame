@@ -19,6 +19,7 @@ public class Menu extends javax.swing.JFrame {
     public static Canvas actualLevel;
     MouseController mouseController;
     PanelInfo info;
+    public static int levelNumber;
     
     /**
      * Creates new form Menu
@@ -30,6 +31,7 @@ public class Menu extends javax.swing.JFrame {
         initVariables();
     }
     private void initComponents2(){
+        levelNumber=1;
         CommonUtils.width=panelCanvas.getWidth();
         CommonUtils.height= panelCanvas.getHeight();
         groupDifficult.add(radioEasy);

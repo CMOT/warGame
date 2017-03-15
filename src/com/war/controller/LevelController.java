@@ -6,8 +6,14 @@
 package com.war.controller;
 
 
+import com.war.GUI.Level;
+import com.war.GUI.LevelThree;
+import com.war.GUI.LevelTwo;
+import com.war.GUI.Menu;
+import static com.war.GUI.Menu.actualLevel;
 import com.war.GUI.PanelInfo;
 import com.war.utils.CommonUtils;
+import java.awt.event.MouseListener;
 
 /**
  *
@@ -36,6 +42,35 @@ public class LevelController {
         PanelInfo.unitCharge.setValue(CommonUtils.timeUnit);
     }
 
+    public void levelUp(Level level){
+        Level newLevel= null;
+        Menu.panelCanvas.remove(level);
+        int levelNumber=Menu.levelNumber++;
+        PanelInfo info= null;
+        for(MouseListener listener: level.getMouseListeners()){
+            MouseController controller=(MouseController) listener;
+            info=controller.getInfo();
+            level.removeMouseListener(listener);
+        }
+        switch(levelNumber){
+            case 1:
+                newLevel = new LevelTwo(level.getWidth(), level.getHeight(), CommonUtils.difficult);
+                
+                break;
+            case 2:
+                newLevel = new LevelThree(level.getWidth(), level.getHeight(), CommonUtils.difficult);
+                break;
+            case 3:
+                
+                break;
+        }
+        if(newLevel!=null){
+            Menu.actualLevel= newLevel;
+            actualLevel.addMouseListener(new MouseController(newLevel, info ));
+            Menu.panelCanvas.add(actualLevel);
+        }
+    }
+    
     public boolean killHouse(){
         CommonUtils.points+=200;
         return true;
