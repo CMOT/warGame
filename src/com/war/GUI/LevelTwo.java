@@ -5,11 +5,9 @@
  */
 package com.war.GUI;
 
-import static com.war.GUI.Menu.actualLevel;
 import com.war.controller.BuildController;
 import com.war.controller.BulletController;
 import com.war.controller.LevelController;
-import com.war.controller.MouseController;
 import com.war.controller.UnitController;
 import com.war.model.Build;
 import com.war.model.Bullet;
@@ -25,7 +23,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -33,26 +30,26 @@ import javax.swing.JOptionPane;
  *
  * @author ASUS
  */
-public class LevelOne extends Level implements Runnable{
+public class LevelTwo extends Level implements Runnable{
     Unit selected;
     ImageIcon background;
     Target eliminated;
     boolean runThread;
-//    private UnitController super.getUnitController();
-//    private BuildController buildController;
-//    private BulletController super.getBulletController();
+//    private UnitController unitController;
+//    private BuildController super.getBuildController();
+//    private BulletController bulletController;
 //    private LevelController super.getLevelController();
     Thread hilo;
     
-    public LevelOne(int width, int height, int difficult){
+    public LevelTwo(int width, int height, int difficult){
         super(width, height, difficult);
         this.setBounds(0, 0, width , height);
         CommonUtils.difficult=difficult;
-        background = new ImageIcon(getClass().getResource("/images/cementerio.png"));
+        background = new ImageIcon(getClass().getResource("/images/scene.png"));
         super.setUnitController(new UnitController());
         super.setBuildController( new BuildController());
         super.setBulletController( new BulletController());
-        super.getUnitController().fillListEnemies(difficult, width-200, height-400, "clown");
+        super.getUnitController().fillListEnemies(difficult, width-200, height-400, "momia");
         super.getUnitController().fillListAllies(100, 100, difficult);
         super.getBuildController().fillBuildEnemies(this.getWidth()-140,200, 2, difficult);
         super.getBuildController().fillBuildAllies(30, 200, 1);
@@ -208,20 +205,12 @@ public class LevelOne extends Level implements Runnable{
             if(super.getUnitController().getBossUnit()==null && super.getLevelController().isBossFree()){
                 JOptionPane.showMessageDialog(null, "You Win");
                 runThread=false;
-                Menu.panelCanvas.remove(this);
-                PanelInfo info= null;
-                for(MouseListener listener: this.getMouseListeners()){
-                    MouseController controller=(MouseController) listener;
-                    info=controller.getInfo();
-                    this.removeMouseListener(listener);
-                }
-                LevelTwo levelTwo = new LevelTwo(this.getWidth(), this.getHeight(), CommonUtils.difficult);
-                Menu.actualLevel= levelTwo;
-                actualLevel.addMouseListener(new MouseController(levelTwo, info ));
-                Menu.panelCanvas.add(actualLevel);
+                
             }
             repaint();
         }
     }
+
+
     
 }

@@ -30,7 +30,7 @@ public class CatalogUnit {
         return new Marine("Tanque", 350, x, y , 11 , "tanque", team, "metralleta", 60);
     }
     
-    public Unit getZombie(int x, int y, int team){
+    public Unit getMomia(int x, int y, int team){
         return new Marine("Momia", 30, x, y , 9 , "momia", team, "bala", 80);
     }
     
@@ -39,7 +39,7 @@ public class CatalogUnit {
     }
     
     public Unit getClownBoss(int x, int y, int team){
-        return new Marine("CLow Bot", 600, x, y , 140 , "payasobot", team, "bomb", 130);
+        return new Marine("CLow Bot", 40, x, y , 140 , "payasobot", team, "bomb", 130);
     }
     
 }

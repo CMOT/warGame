@@ -18,7 +18,7 @@ public class CatalogBuild {
     
     
     public Build getMetropoly(int x, int y, int team){
-        return new Metropoly("Fun House", 20*CommonUtils.difficutl, 30 , x, y , "funhouse", team );
+        return new Metropoly("Fun House", 20*CommonUtils.difficult, 30 , x, y , "funhouse", team );
     }
     
     public Build getTrainningBuild(int x, int y, int team){

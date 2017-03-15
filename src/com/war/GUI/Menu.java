@@ -16,7 +16,7 @@ import java.awt.Canvas;
 public class Menu extends javax.swing.JFrame {
 
     private boolean play;
-    Canvas actualLevel;
+    public static Canvas actualLevel;
     MouseController mouseController;
     PanelInfo info;
     
@@ -143,7 +143,7 @@ public class Menu extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 25, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 45, Short.MAX_VALUE)
                 .addGroup(newGameDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnStart)
                     .addComponent(btnCancel))
@@ -318,8 +318,8 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JSlider jSlider1;
     private javax.swing.JMenuItem menuItemNewGame;
     private javax.swing.JInternalFrame newGameDialog;
-    private javax.swing.JPanel panelCanvas;
-    private javax.swing.JPanel panelInf;
+    public static javax.swing.JPanel panelCanvas;
+    public static javax.swing.JPanel panelInf;
     private javax.swing.JRadioButton radioEasy;
     private javax.swing.JRadioButton radioHard;
     private javax.swing.JRadioButton radioMedium;

@@ -5,7 +5,7 @@
  */
 package com.war.controller;
 
-import com.war.GUI.LevelOne;
+import com.war.GUI.Level;
 import com.war.GUI.PanelInfo;
 import com.war.model.Build;
 import com.war.model.Unit;
@@ -20,12 +20,12 @@ import java.awt.event.MouseListener;
  */
 public class MouseController implements MouseListener {
 
-    LevelOne level;
+    Level level;
     Unit selected;
     Build selectedBuild;
-    PanelInfo info;
+    private PanelInfo info;
 
-    public MouseController(LevelOne level, PanelInfo info) {
+    public MouseController(Level level, PanelInfo info) {
         this.level = level;
         selected = null;
         selectedBuild = null;
@@ -51,7 +51,7 @@ public class MouseController implements MouseListener {
                 }
             }
             if(CommonUtils.selected!= null){
-                info.updateInfoUnit((Unit)CommonUtils.selected);
+                getInfo().updateInfoUnit((Unit)CommonUtils.selected);
             }
             if ( CommonUtils.selected==null) {
                 for (Unit unit : level.getUnitController().getListEnemies()) {
@@ -64,7 +64,7 @@ public class MouseController implements MouseListener {
                         selected = null;
                     }
                 }
-                info.updateInfoUnit((Unit)CommonUtils.selected);
+                getInfo().updateInfoUnit((Unit)CommonUtils.selected);
             }
             if ( CommonUtils.selected==null) {
                 for (Build build : level.getBuildController().getListBuilds()) {
@@ -77,7 +77,7 @@ public class MouseController implements MouseListener {
                         selectedBuild = null;
                     }
                 }
-                info.updateInfoBuild((Build)CommonUtils.selected);
+                getInfo().updateInfoBuild((Build)CommonUtils.selected);
             }
             if ( CommonUtils.selected==null) {
                 for (Build build : level.getBuildController().getListBuildAllies()) {
@@ -90,7 +90,7 @@ public class MouseController implements MouseListener {
                         selectedBuild = null;
                     }
                 }
-                info.updateInfoBuild((Build)CommonUtils.selected);
+                getInfo().updateInfoBuild((Build)CommonUtils.selected);
             }
         } else if (e.getModifiers() == 4 && selected != null) {
             selected.setMove(true);
@@ -150,4 +150,18 @@ public class MouseController implements MouseListener {
     public void mouseExited(MouseEvent e) {
     }
 
+    /**
+     * @return the info
+     */
+    public PanelInfo getInfo() {
+        return info;
+    }
+
+    /**
+     * @param info the info to set
+     */
+    public void setInfo(PanelInfo info) {
+        this.info = info;
+    }
+       
 }

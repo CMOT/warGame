@@ -24,7 +24,7 @@ public class UnitController {
     private volatile ArrayList<Unit> listEnemies;
     private volatile ArrayList<Unit> listAllies;
     private volatile Unit bossUnit;
-    volatile Unit clown, sold;
+    volatile Unit enemy, sold;
     CatalogUnit units;
     
     public UnitController(){
@@ -34,14 +34,22 @@ public class UnitController {
         bossUnit= null;
     }
     
-    public void fillListEnemies(int size, int radioX, int radioY){
+    public void fillListEnemies(int size, int radioX, int radioY, String type){
         int count =1;
         for(int i=0; i < 12*size; i++){
             if(count==4){
                 count=1;
             }
-            clown  =units.getClown(radioX+(int)(Math.random()*100 + 1), radioY +(int)(Math.random()*120 + 20)*count, 2);
-            getListEnemies().add(clown);
+            switch(type){
+                case "clown":
+                    enemy  =units.getClown(radioX+(int)(Math.random()*100 + 1), radioY +(int)(Math.random()*120 + 20)*count, 2);
+                    break;
+                case "momia":
+                    enemy  =units.getMomia(radioX+(int)(Math.random()*100 + 1), radioY +(int)(Math.random()*120 + 20)*count, 2);
+                    break;
+            }
+            
+            getListEnemies().add(enemy);
             count++;
         }
     }

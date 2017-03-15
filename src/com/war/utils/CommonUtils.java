@@ -23,7 +23,7 @@ public class CommonUtils {
     public static int timeUnit=0;
     public static boolean createUnit=false;
     public static int typeUnit=0;
-    public static int difficutl=0;
+    public static int difficult=0;
     
     private CommonUtils(){
         
