@@ -29,6 +29,16 @@ public class CommonUtils {
         
     }
     
+    public static void resetValues(){
+        points=300;
+        time=0;
+        timeUnit=0;
+        selected=null;
+        createUnit=false;
+        typeUnit=0;
+        difficult=0;
+    }
+    
      public static boolean isCloseToThePoint(int y1, int y2, int size){
         if(y1==y2){
             return true;

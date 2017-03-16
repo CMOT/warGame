@@ -36,7 +36,7 @@ public class UnitController {
     
     public void fillListEnemies(int size, int radioX, int radioY, String type){
         int count =1;
-        for(int i=0; i < 12*size; i++){
+        for(int i=0; i < 8*size; i++){
             if(count==4){
                 count=1;
             }
@@ -46,6 +46,9 @@ public class UnitController {
                     break;
                 case "momia":
                     enemy  =units.getMomia(radioX+(int)(Math.random()*100 + 1), radioY +(int)(Math.random()*120 + 20)*count, 2);
+                    break;
+                case "vampiro":
+                    enemy  =units.getVampiro(radioX+(int)(Math.random()*100 + 1), radioY +(int)(Math.random()*120 + 20)*count, 2);
                     break;
             }
             
@@ -313,7 +316,6 @@ public class UnitController {
             default:
                 sold=units.getMasterChief(30, 200, 1);
         }
-        System.out.println("Se creo una unidad: "+ CommonUtils.typeUnit);
         if(sold!=null){
             sold.setLimit(new Point(30 +(int)(Math.random()*60), 50 + (int)(Math.random()*250) ));
             sold.setMove(true);
@@ -325,11 +327,20 @@ public class UnitController {
         }
         
     }
-    public void createEnemies(int size, Point out){
-        System.out.println("Crea a: "+size+ " en el punto x: " +out.x + " en y: "+ out.y);
+    public void createEnemies(int size, Point out, String type){
         for(int i=1; i<= size*2; i++){
-            System.out.println("ciclo de creacion");
-            sold= units.getClown(out.x, out.y, 2);
+            
+            switch(type){
+                case "clown":
+                    sold = units.getClown(out.x, out.y, 2);
+                    break;
+                case "momia":
+                    sold = units.getMomia(out.x, out.y, 2);
+                    break;
+                case "vampiro":
+                    sold = units.getVampiro(out.x, out.y, 2);
+                    break;
+            }
             sold.setLimit(new Point((int)(out.getX()-(Math.random()*30)), (int)(out.getY()+(Math.random()*30)) ));
             sold.setMove(true);
             sold.setState(1);

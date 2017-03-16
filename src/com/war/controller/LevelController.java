@@ -45,17 +45,15 @@ public class LevelController {
     public void levelUp(Level level){
         Level newLevel= null;
         Menu.panelCanvas.remove(level);
-        int levelNumber=Menu.levelNumber++;
         PanelInfo info= null;
         for(MouseListener listener: level.getMouseListeners()){
             MouseController controller=(MouseController) listener;
             info=controller.getInfo();
             level.removeMouseListener(listener);
         }
-        switch(levelNumber){
+        switch(Menu.levelNumber){
             case 1:
                 newLevel = new LevelTwo(level.getWidth(), level.getHeight(), CommonUtils.difficult);
-                
                 break;
             case 2:
                 newLevel = new LevelThree(level.getWidth(), level.getHeight(), CommonUtils.difficult);
@@ -65,9 +63,11 @@ public class LevelController {
                 break;
         }
         if(newLevel!=null){
+            Menu.levelNumber++;
             Menu.actualLevel= newLevel;
             actualLevel.addMouseListener(new MouseController(newLevel, info ));
             Menu.panelCanvas.add(actualLevel);
+            CommonUtils.resetValues();
         }
     }
     

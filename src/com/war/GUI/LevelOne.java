@@ -5,11 +5,9 @@
  */
 package com.war.GUI;
 
-import static com.war.GUI.Menu.actualLevel;
 import com.war.controller.BuildController;
 import com.war.controller.BulletController;
 import com.war.controller.LevelController;
-import com.war.controller.MouseController;
 import com.war.controller.UnitController;
 import com.war.model.Build;
 import com.war.model.Bullet;
@@ -18,14 +16,12 @@ import com.war.model.Metropoly;
 import com.war.model.Target;
 import com.war.model.Unit;
 import com.war.utils.CommonUtils;
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -100,7 +96,8 @@ public class LevelOne extends Level implements Runnable{
         Font font= new Font("Arial", Font.ITALIC, 18);
         g2d.setColor(Color.green);
         g2d.setFont(font);
-        g2d.drawString("Points: "+CommonUtils.points, 10, 30);
+        g2d.drawString("Level: "+Menu.levelNumber, 10, 30);
+        g2d.drawString("Points: "+CommonUtils.points, 10, 60);
 //        g2d.drawString("Time: "+super.getLevelController().getTime(), CommonUtils.width-150, 30);
     }
     
@@ -195,7 +192,7 @@ public class LevelOne extends Level implements Runnable{
                 }
                 boolean crear=super.getBuildController().equalsGame(super.getUnitController().getBossUnit().getHealtPoints());
                 if(crear){
-                    super.getUnitController().createEnemies(super.getUnitController().getBossUnit().getLifePoints()/super.getUnitController().getBossUnit().getHealtPoints(), super.getUnitController().getBossUnit().getCollisionRec().getLocation());
+                    super.getUnitController().createEnemies(super.getUnitController().getBossUnit().getLifePoints()/super.getUnitController().getBossUnit().getHealtPoints(), super.getUnitController().getBossUnit().getCollisionRec().getLocation(), "clown");
                 }
                 if(super.getUnitController().getBossUnit().getHealtPoints()<0){
                     super.getUnitController().setBossUnit(null);
@@ -205,17 +202,6 @@ public class LevelOne extends Level implements Runnable{
                 JOptionPane.showMessageDialog(null, "You finish level one");
                 runThread=false;
                 super.getLevelController().levelUp(this);
-//                Menu.panelCanvas.remove(this);
-//                PanelInfo info= null;
-//                for(MouseListener listener: this.getMouseListeners()){
-//                    MouseController controller=(MouseController) listener;
-//                    info=controller.getInfo();
-//                    this.removeMouseListener(listener);
-//                }
-//                LevelTwo levelTwo = new LevelTwo(this.getWidth(), this.getHeight(), CommonUtils.difficult);
-//                Menu.actualLevel= levelTwo;
-//                actualLevel.addMouseListener(new MouseController(levelTwo, info ));
-//                Menu.panelCanvas.add(actualLevel);
             }
             repaint();
         }

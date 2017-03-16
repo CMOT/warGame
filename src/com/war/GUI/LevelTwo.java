@@ -16,7 +16,6 @@ import com.war.model.Metropoly;
 import com.war.model.Target;
 import com.war.model.Unit;
 import com.war.utils.CommonUtils;
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -95,9 +94,10 @@ public class LevelTwo extends Level implements Runnable{
                  bullet2.paint(g2d);
         }
         Font font= new Font("Arial", Font.ITALIC, 18);
-        g2d.setColor(Color.green);
+        g2d.setColor(Color.red);
         g2d.setFont(font);
-        g2d.drawString("Points: "+CommonUtils.points, 10, 30);
+        g2d.drawString("Level: "+Menu.levelNumber, 10, 30);
+        g2d.drawString("Points: "+CommonUtils.points, 10, 60);
 //        g2d.drawString("Time: "+super.getLevelController().getTime(), CommonUtils.width-150, 30);
     }
     
@@ -160,7 +160,6 @@ public class LevelTwo extends Level implements Runnable{
             if((eliminated=super.getBulletController().shootBuilds(super.getBuildController().getListBuilds()))!=null){
                  eliminated= super.getUnitController().deleteTargets(eliminated, 1);
             }
-            
             if((eliminated=super.getBulletController().shootAllies(super.getUnitController().getListAllies()))!=null ){
                eliminated= super.getUnitController().deleteTargets(eliminated, 2);
             }
@@ -170,11 +169,9 @@ public class LevelTwo extends Level implements Runnable{
 //            for(Build metro: super.getBuildController().getListBuilds()){
 //                boolean crear=super.getBuildController().equalsGame(metro.getHealtPoints());
 //                if(crear){
-//                    super.getUnitController().createEnemies(metro.getLifePoints()/metro.getHealtPoints()+super.getLevelController().getDifficult());
+//                    super.getUnitController().createEnemies(metro.getLifePoints()/metro.getHealtPoints()+super.getLevelController().getDifficult(), new Point(super.getBuildController().getListBuilds().get(0).getX(),super.getBuildController().getListBuilds().get(0).getY()));
 //                }
 //            }
-
-                
             super.getLevelController().goTime();
             if(super.getBuildController().createUnit()){
                 super.getUnitController().createUnit();
@@ -192,14 +189,14 @@ public class LevelTwo extends Level implements Runnable{
                 }
                 boolean crear=super.getBuildController().equalsGame(super.getUnitController().getBossUnit().getHealtPoints());
                 if(crear){
-                    super.getUnitController().createEnemies(super.getUnitController().getBossUnit().getLifePoints()/super.getUnitController().getBossUnit().getHealtPoints(), super.getUnitController().getBossUnit().getCollisionRec().getLocation());
+                    super.getUnitController().createEnemies(super.getUnitController().getBossUnit().getLifePoints()/super.getUnitController().getBossUnit().getHealtPoints(), super.getUnitController().getBossUnit().getCollisionRec().getLocation(), "momia");
                 }
                 if(super.getUnitController().getBossUnit().getHealtPoints()<0){
                     super.getUnitController().setBossUnit(null);
                 }
             }
             if(super.getUnitController().getBossUnit()==null && super.getLevelController().isBossFree()){
-                JOptionPane.showMessageDialog(null, "You Win");
+                JOptionPane.showMessageDialog(null, "You finish level two");
                 runThread=false;
                 super.getLevelController().levelUp(this);
                 

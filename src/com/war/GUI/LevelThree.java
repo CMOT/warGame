@@ -94,9 +94,10 @@ public class LevelThree extends Level implements Runnable{
                  bullet2.paint(g2d);
         }
         Font font= new Font("Arial", Font.ITALIC, 18);
-        g2d.setColor(Color.green);
+        g2d.setColor(Color.yellow);
         g2d.setFont(font);
-        g2d.drawString("Points: "+CommonUtils.points, 10, 30);
+        g2d.drawString("Level: "+Menu.levelNumber, 10, 30);
+        g2d.drawString("Points: "+CommonUtils.points, 10, 60);
 //        g2d.drawString("Time: "+super.getLevelController().getTime(), CommonUtils.width-150, 30);
     }
     
@@ -190,21 +191,18 @@ public class LevelThree extends Level implements Runnable{
                 }
                 boolean crear=super.getBuildController().equalsGame(super.getUnitController().getBossUnit().getHealtPoints());
                 if(crear){
-                    super.getUnitController().createEnemies(super.getUnitController().getBossUnit().getLifePoints()/super.getUnitController().getBossUnit().getHealtPoints(), super.getUnitController().getBossUnit().getCollisionRec().getLocation());
+                    super.getUnitController().createEnemies(super.getUnitController().getBossUnit().getLifePoints()/super.getUnitController().getBossUnit().getHealtPoints(), super.getUnitController().getBossUnit().getCollisionRec().getLocation(), "vampiro");
                 }
                 if(super.getUnitController().getBossUnit().getHealtPoints()<0){
                     super.getUnitController().setBossUnit(null);
                 }
             }
             if(super.getUnitController().getBossUnit()==null && super.getLevelController().isBossFree()){
-                JOptionPane.showMessageDialog(null, "You Win");
+                JOptionPane.showMessageDialog(null, "You finish level three");
                 runThread=false;
-                
             }
             repaint();
         }
     }
-
-
     
 }
