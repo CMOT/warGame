@@ -21,6 +21,10 @@ public class CatalogBuild {
         return new Metropoly("Fun House", 20*CommonUtils.difficult, 30 , x, y , "funhouse", team );
     }
     
+    public Build getPyramid(int x, int y, int team){
+        return new Metropoly("Pyramid", 20*CommonUtils.difficult, 30 , x, y , "píramide", team );
+    }
+    
     public Build getTrainningBuild(int x, int y, int team){
         return new Metropoly("Castle", 100, 30 , x, y , "castillo", team );
     }

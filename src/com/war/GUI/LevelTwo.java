@@ -22,6 +22,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Point;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -166,12 +167,12 @@ public class LevelTwo extends Level implements Runnable{
 //            if((eliminated=super.getBulletController().shootBuildsAllies(super.getBuildController().getListBuildAllies()))!=null){
 //                 eliminated= super.getUnitController().deleteTargets(eliminated);
 //            }
-//            for(Build metro: super.getBuildController().getListBuilds()){
-//                boolean crear=super.getBuildController().equalsGame(metro.getHealtPoints());
-//                if(crear){
-//                    super.getUnitController().createEnemies(metro.getLifePoints()/metro.getHealtPoints()+super.getLevelController().getDifficult(), new Point(super.getBuildController().getListBuilds().get(0).getX(),super.getBuildController().getListBuilds().get(0).getY()));
-//                }
-//            }
+            for(Build metro: super.getBuildController().getListBuilds()){
+                boolean crear=super.getBuildController().equalsGame(metro.getHealtPoints());
+                if(crear){
+                    super.getUnitController().createEnemies(metro.getLifePoints()/metro.getHealtPoints()+super.getLevelController().getDifficult(), new Point(super.getBuildController().getListBuilds().get(0).getX(),super.getBuildController().getListBuilds().get(0).getY()), "momia");
+                }
+            }
             super.getLevelController().goTime();
             if(super.getBuildController().createUnit()){
                 super.getUnitController().createUnit();

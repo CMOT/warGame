@@ -36,7 +36,7 @@ public class UnitController {
     
     public void fillListEnemies(int size, int radioX, int radioY, String type){
         int count =1;
-        for(int i=0; i < 8*size; i++){
+        for(int i=0; i < 6*size; i++){
             if(count==4){
                 count=1;
             }
