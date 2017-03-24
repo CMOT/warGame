@@ -5,6 +5,7 @@
  */
 package com.war.controller;
 
+import com.war.GUI.Menu;
 import com.war.model.Build;
 import com.war.model.CatalogBuild;
 import com.war.model.Unit;
@@ -31,7 +32,18 @@ public class BuildController {
     }
     
     public void fillBuildEnemies(int x, int y, int team, int difficult){
-        getListBuilds().add(catalog.getMetropoly(x, y, team));
+        switch(Menu.levelNumber){
+            case 1:
+                getListBuilds().add(catalog.getMetropoly(x, y, team));
+                break;
+            case 2:
+                getListBuilds().add(catalog.getPyramid(x, y, team));
+                break;
+            case 3:
+                getListBuilds().add(catalog.getMansion(x, y, team));
+                break;
+        }
+        
     }
     
     public void fillBuildAllies(int x, int y, int team){

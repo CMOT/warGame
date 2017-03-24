@@ -31,7 +31,7 @@ public class Menu extends javax.swing.JFrame {
         initVariables();
     }
     private void initComponents2(){
-        levelNumber=1;
+        levelNumber=3;
         CommonUtils.width=panelCanvas.getWidth();
         CommonUtils.height= panelCanvas.getHeight();
         groupDifficult.add(radioEasy);
@@ -239,7 +239,7 @@ public class Menu extends javax.swing.JFrame {
             initComponents2();
 
         }
-        LevelOne levelOne = new LevelOne(panelCanvas.getWidth(), panelCanvas.getHeight(), getDifficult());
+        LevelThree levelOne = new LevelThree(panelCanvas.getWidth(), panelCanvas.getHeight(), getDifficult());
         actualLevel= levelOne;
         panelCanvas.add(actualLevel);
         actualLevel.addMouseListener(new MouseController(levelOne, info));

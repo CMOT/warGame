@@ -22,7 +22,11 @@ public class CatalogBuild {
     }
     
     public Build getPyramid(int x, int y, int team){
-        return new Metropoly("Pyramid", 20*CommonUtils.difficult, 30 , x, y , "píramide", team );
+        return new Metropoly("Pyramid", 20*CommonUtils.difficult, 30 , x, y , "piramide", team );
+    }
+    
+    public Build getMansion(int x, int y, int team){
+        return new Metropoly("Mansion", 20*CommonUtils.difficult, 30 , x, y , "mansion", team );
     }
     
     public Build getTrainningBuild(int x, int y, int team){

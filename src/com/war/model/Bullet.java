@@ -36,7 +36,7 @@ public class Bullet {
         this.power = power;
         this.x = x;
         this.y = y;
-        this.image = new ImageIcon(getClass().getResource("/images/"+bullet+".png"));
+        this.image = new ImageIcon(getClass().getResource("/images/"+bullet+".gif"));
         this.collisionRec = new Rectangle(x, y, getImage().getIconWidth(), getImage().getIconHeight());
         this.team= team;
         this.shooted=false;

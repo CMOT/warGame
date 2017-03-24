@@ -5,6 +5,7 @@
  */
 package com.war.controller;
 
+import com.war.GUI.Menu;
 import com.war.model.Build;
 import com.war.model.Bullet;
 import com.war.model.CatalogUnit;
@@ -50,8 +51,10 @@ public class UnitController {
                 case "vampiro":
                     enemy  =units.getVampiro(radioX+(int)(Math.random()*100 + 1), radioY +(int)(Math.random()*120 + 20)*count, 2);
                     break;
+                case "boss":
+                    enemy = units.getClownBoss(radioX+(int)(Math.random()*100 + 1), radioY +(int)(Math.random()*120 + 20)*count, 2);
+                    break;
             }
-            
             getListEnemies().add(enemy);
             count++;
         }
@@ -351,7 +354,17 @@ public class UnitController {
     }
     
     public void freeTheBoss(){
-        bossUnit= units.getClownBoss(CommonUtils.width-150, 200, 2);
+        switch(Menu.levelNumber){
+            case 1:
+                bossUnit= units.getClownBoss(CommonUtils.width-150, 200, 2);
+            break;
+            case 2:
+                bossUnit= units.getMomBoss(CommonUtils.width-150, 200, 2);
+                break;
+            case 3:
+                bossUnit= units.getVampireBoss(CommonUtils.width-150, 200, 2);
+                break;
+        }
 //        getListEnemies().add(sold);
     }
     
