@@ -7,6 +7,7 @@ package com.war.GUI;
 
 import com.war.controller.BuildController;
 import com.war.controller.BulletController;
+import com.war.controller.ItemController;
 import com.war.controller.LevelController;
 import com.war.controller.UnitController;
 import com.war.model.Target;
@@ -27,6 +28,7 @@ public class Level extends Canvas{
     private BuildController buildController;
     private BulletController bulletController;
     private LevelController levelController;
+    private ItemController itemController;
     private Thread hilo;
     
     public Level(int width, int height, int difficult){
@@ -144,6 +146,20 @@ public class Level extends Canvas{
      */
     public void setHilo(Thread hilo) {
         this.hilo = hilo;
+    }
+
+    /**
+     * @return the itemController
+     */
+    public ItemController getItemController() {
+        return itemController;
+    }
+
+    /**
+     * @param itemController the itemController to set
+     */
+    public void setItemController(ItemController itemController) {
+        this.itemController = itemController;
     }
     
     

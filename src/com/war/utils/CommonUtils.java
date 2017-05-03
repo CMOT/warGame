@@ -24,6 +24,7 @@ public class CommonUtils {
     public static boolean createUnit=false;
     public static int typeUnit=0;
     public static int difficult=0;
+    public static boolean itemselect=false;
     
     private CommonUtils(){
         

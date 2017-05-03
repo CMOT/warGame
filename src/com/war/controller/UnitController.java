@@ -6,6 +6,7 @@
 package com.war.controller;
 
 import com.war.GUI.Menu;
+import com.war.model.Bomb;
 import com.war.model.Build;
 import com.war.model.Bullet;
 import com.war.model.CatalogUnit;
@@ -431,6 +432,20 @@ public class UnitController {
         return bullet;
     }
     
+    public int boomBomb(Bomb bomb){
+        if(bomb.isDamaging()){
+            for(Unit unitEnemy :  listEnemies){
+                if(bomb.getCollisionRec().contains(unitEnemy.getCollisionRec())){
+                    unitEnemy.setHealtPoints(unitEnemy.getHealtPoints()-bomb.getPower());
+                }
+            }
+        }
+        bomb.upCounter();
+        if(bomb.finish()){
+            return 1;
+        }
+        return 0;
+    }
     
 //    public boolean numberOfBullets(int current, int max, int difficult){
 //        switch(difficult){

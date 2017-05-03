@@ -9,8 +9,10 @@ import com.war.controller.BuildController;
 import com.war.controller.BulletController;
 import com.war.controller.LevelController;
 import com.war.controller.UnitController;
+import com.war.model.Bomb;
 import com.war.model.Build;
 import com.war.model.Bullet;
+import com.war.model.Item;
 import com.war.model.Marine;
 import com.war.model.Metropoly;
 import com.war.model.Target;
@@ -94,6 +96,12 @@ public class LevelOne extends Level implements Runnable{
         for(Bullet bullet2: super.getBulletController().getListBulletsEnemies()){
                  bullet2.paint(g2d);
         }
+        for (Item item : super.getItemController().getItemList()) {
+            if(item instanceof Bomb){
+                Bomb bomb = (Bomb) item;
+                bomb.paint(g2d);
+            }
+        }
         Font font= new Font("Arial", Font.ITALIC, 18);
         g2d.setColor(Color.green);
         g2d.setFont(font);
@@ -174,8 +182,18 @@ public class LevelOne extends Level implements Runnable{
                     super.getUnitController().createEnemies(metro.getLifePoints()/metro.getHealtPoints()+super.getLevelController().getDifficult(), new Point(super.getBuildController().getListBuilds().get(0).getX(),super.getBuildController().getListBuilds().get(0).getY()), "clown");
                 }
             }
-
-                
+             
+            for(Item item: super.getItemController().getItemList()){
+                if(item instanceof Bomb){
+                    if(item.isActive()){
+                        Bomb bomb = (Bomb) item;
+                        if(super.getUnitController().boomBomb(bomb)==1){
+                            super.getItemController().getItemList().remove(item);
+                        }
+                    }
+                }
+            }
+            
             super.getLevelController().goTime();
             if(super.getBuildController().createUnit()){
                 super.getUnitController().createUnit();

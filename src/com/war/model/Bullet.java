@@ -5,7 +5,6 @@
  */
 package com.war.model;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import javax.swing.ImageIcon;
@@ -44,7 +43,6 @@ public class Bullet {
         this.moveY=targetY;
         this.time=0.0;
         this.angule= Math.random();
-        
         
     }
     public void paint(Graphics2D g){

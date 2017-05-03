@@ -7,6 +7,7 @@ package com.war.controller;
 
 import com.war.GUI.Level;
 import com.war.GUI.PanelInfo;
+import com.war.model.Bomb;
 import com.war.model.Build;
 import com.war.model.Unit;
 import com.war.utils.CommonUtils;
@@ -38,23 +39,14 @@ public class MouseController implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
+        
         if (e.getModifiers() == 16) {
-            CommonUtils.selected=null;
-            for (Unit unit : level.getUnitController().getListAllies()) {
-                if (unit.getCollisionRec().contains(e.getPoint())) {
-                    selected = unit;
-                    CommonUtils.selected=unit;
-                    break;
-                } else {
-                    CommonUtils.selected=null;
-                    selected = null;
-                }
-            }
-            if(CommonUtils.selected!= null){
-                getInfo().updateInfoUnit((Unit)CommonUtils.selected);
-            }
-            if ( CommonUtils.selected==null) {
-                for (Unit unit : level.getUnitController().getListEnemies()) {
+            if(CommonUtils.itemselect ){
+                level.getItemController().addItem(e.getX(), e.getY(), 1, 1);
+                CommonUtils.itemselect=false;
+            }else{
+                CommonUtils.selected=null;
+                for (Unit unit : level.getUnitController().getListAllies()) {
                     if (unit.getCollisionRec().contains(e.getPoint())) {
                         selected = unit;
                         CommonUtils.selected=unit;
@@ -64,33 +56,48 @@ public class MouseController implements MouseListener {
                         selected = null;
                     }
                 }
-                getInfo().updateInfoUnit((Unit)CommonUtils.selected);
-            }
-            if ( CommonUtils.selected==null) {
-                for (Build build : level.getBuildController().getListBuilds()) {
-                    if (build.getCollisionRec().contains(e.getPoint())) {
-                        selectedBuild = build;
-                        CommonUtils.selected=build;
-                        break;
-                    } else {
-                        CommonUtils.selected=null;
-                        selectedBuild = null;
-                    }
+                if(CommonUtils.selected!= null){
+                    getInfo().updateInfoUnit((Unit)CommonUtils.selected);
                 }
-                getInfo().updateInfoBuild((Build)CommonUtils.selected);
-            }
-            if ( CommonUtils.selected==null) {
-                for (Build build : level.getBuildController().getListBuildAllies()) {
-                    if (build.getCollisionRec().contains(e.getPoint())) {
-                        selectedBuild = build;
-                        CommonUtils.selected=build;
-                        break;
-                    } else {
-                        CommonUtils.selected=null;
-                        selectedBuild = null;
+                if ( CommonUtils.selected==null) {
+                    for (Unit unit : level.getUnitController().getListEnemies()) {
+                        if (unit.getCollisionRec().contains(e.getPoint())) {
+                            selected = unit;
+                            CommonUtils.selected=unit;
+                            break;
+                        } else {
+                            CommonUtils.selected=null;
+                            selected = null;
+                        }
                     }
+                    getInfo().updateInfoUnit((Unit)CommonUtils.selected);
                 }
-                getInfo().updateInfoBuild((Build)CommonUtils.selected);
+                if ( CommonUtils.selected==null) {
+                    for (Build build : level.getBuildController().getListBuilds()) {
+                        if (build.getCollisionRec().contains(e.getPoint())) {
+                            selectedBuild = build;
+                            CommonUtils.selected=build;
+                            break;
+                        } else {
+                            CommonUtils.selected=null;
+                            selectedBuild = null;
+                        }
+                    }
+                    getInfo().updateInfoBuild((Build)CommonUtils.selected);
+                }
+                if ( CommonUtils.selected==null) {
+                    for (Build build : level.getBuildController().getListBuildAllies()) {
+                        if (build.getCollisionRec().contains(e.getPoint())) {
+                            selectedBuild = build;
+                            CommonUtils.selected=build;
+                            break;
+                        } else {
+                            CommonUtils.selected=null;
+                            selectedBuild = null;
+                        }
+                    }
+                    getInfo().updateInfoBuild((Build)CommonUtils.selected);
+                }
             }
         } else if (e.getModifiers() == 4 && selected != null) {
             selected.setMove(true);
