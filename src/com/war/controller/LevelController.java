@@ -13,7 +13,12 @@ import com.war.GUI.Menu;
 import static com.war.GUI.Menu.actualLevel;
 import com.war.GUI.PanelInfo;
 import com.war.utils.CommonUtils;
+import java.awt.Cursor;
+import java.awt.HeadlessException;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.MouseListener;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -71,6 +76,23 @@ public class LevelController {
         }
     }
     
+    public void changeCursor(Level level, String cursor){
+        try{
+            switch(cursor){
+                case "sword":
+                    level.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("espada.png").getImage(),new Point(10,10),"custom cursor"));
+                    break;
+                case "item":
+                    level.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("bomb.png").getImage(),new Point(10,10),"custom cursor"));
+                    break;
+                default :
+                    level.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                    
+            }
+        }catch(IndexOutOfBoundsException | HeadlessException e){
+            System.out.println("Exception in changeCursor: {0}"+ e.getMessage());
+        }
+    }
     public boolean killHouse(){
         CommonUtils.points+=200;
         return true;

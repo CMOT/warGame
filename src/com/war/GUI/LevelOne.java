@@ -134,6 +134,11 @@ public class LevelOne extends Level implements Runnable{
             try {
                 hilo.sleep(40);
             } catch (InterruptedException ex) {}
+            if(CommonUtils.itemselect){
+                getLevelController().changeCursor(this,"item");
+            }else{
+                getLevelController().changeCursor(this,"");
+            }
             for(Unit unit:super.getUnitController().getListAllies()){
                 if(unit.getCountShoot()!=unit.getShootCold() ){
                     if( unit.getCountShoot()<=unit.getShootCold()+16){
