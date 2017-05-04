@@ -26,7 +26,7 @@ public class ItemController {
     public void addItem(int x, int y, int team, int type){
         switch(type){
             case 1://Bomba
-                itemList.add(catalogItem.getBombItem(x, y, 200 ,team));
+                itemList.add(catalogItem.getBombItem(x, y, 210 ,team));
                 break;
             case 2://Por definir nuevos items
 //                itemList.add(catalogItem.getBombItem(x, y, team));

@@ -39,11 +39,12 @@ public class Bomb extends Item{
     
     public void down(){
         this.setY(this.getY()+1);
+        this.getCollisionRec().y++;
     }
     
     public boolean isDamaging(){
 //        if(getCounter()==100 || getCounter()==200 || getCounter()==300 || getCounter()==400){
-        if(getCounter()%40==0){
+        if(getCounter()%30==0){
             return true;
         }
         return false;
