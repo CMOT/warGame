@@ -63,7 +63,7 @@ public class LevelOne extends Level implements Runnable{
     public void paint(Graphics g){
         super.paint(g);
         Graphics2D g2d=(Graphics2D) g;
-//        g2d.drawImage(background.getImage(), 0, 0, this.getWidth(), this.getHeight(), this);
+        g2d.drawImage(background.getImage(), 0, 0, this.getWidth(), this.getHeight(), this);
         for(Build buildA:getBuildController().getListBuildAllies() ){
             if(buildA instanceof Metropoly){
                 Metropoly metro= (Metropoly) buildA;

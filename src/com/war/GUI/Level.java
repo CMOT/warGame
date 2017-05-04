@@ -13,6 +13,7 @@ import com.war.controller.UnitController;
 import com.war.model.MessageLabel;
 import com.war.model.Target;
 import com.war.model.Unit;
+import com.war.utils.CommonUtils;
 import java.awt.Canvas;
 import javax.swing.ImageIcon;
 
@@ -36,6 +37,7 @@ public class Level extends Canvas{
     
     public Level(int width, int height, int difficult){
         this.setBounds(0, 0, width , height);
+        CommonUtils.points*=difficult;
         winLevel=false;
         
     }

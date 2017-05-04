@@ -10,8 +10,10 @@ import com.war.controller.BulletController;
 import com.war.controller.ItemController;
 import com.war.controller.LevelController;
 import com.war.controller.UnitController;
+import com.war.model.Bomb;
 import com.war.model.Build;
 import com.war.model.Bullet;
+import com.war.model.Item;
 import com.war.model.Marine;
 import com.war.model.Metropoly;
 import com.war.model.Target;
@@ -101,6 +103,12 @@ public class LevelTwo extends Level implements Runnable{
         g2d.setFont(font);
         g2d.drawString("Level: "+Menu.levelNumber, 10, 30);
         g2d.drawString("Points: "+CommonUtils.points, 10, 60);
+        if(super.getMessageLabel()!=null){
+            super.getMessageLabel().paint(g2d);
+            if(super.getMessageLabel().isFinish()){
+                super.setMessageLabel(null);
+            }
+        }
 //        g2d.drawString("Time: "+super.getLevelController().getTime(), CommonUtils.width-150, 30);
     }
     
@@ -128,6 +136,11 @@ public class LevelTwo extends Level implements Runnable{
             try {
                 hilo.sleep(40);
             } catch (InterruptedException ex) {}
+            if(CommonUtils.itemselect){
+                getLevelController().changeCursor(this,"item");
+            }else{
+                getLevelController().changeCursor(this,"");
+            }
             for(Unit unit:super.getUnitController().getListAllies()){
                 if(unit.getCountShoot()!=unit.getShootCold() ){
                     if( unit.getCountShoot()<=unit.getShootCold()+16){
@@ -175,7 +188,23 @@ public class LevelTwo extends Level implements Runnable{
                     super.getUnitController().createEnemies(metro.getLifePoints()/metro.getHealtPoints()+super.getLevelController().getDifficult(), new Point(super.getBuildController().getListBuilds().get(0).getX(),super.getBuildController().getListBuilds().get(0).getY()), "momia");
                 }
             }
+            
+            for(Item item: super.getItemController().getItemList()){
+                if(item instanceof Bomb){
+                    if(item.isActive()){
+                        Bomb bomb = (Bomb) item;
+                        if(super.getUnitController().boomBomb(bomb)==1){
+                            super.getItemController().getItemList().remove(item);
+                            break;
+                        }
+                    }
+                }
+            }
+            
             super.getLevelController().goTime();
+             if(!CommonUtils.message.isEmpty()){
+                super.setMessageLabel( super.getLevelController().isNewMessage());
+            }
             if(super.getBuildController().createUnit()){
                 super.getUnitController().createUnit();
             }
@@ -199,10 +228,16 @@ public class LevelTwo extends Level implements Runnable{
                 }
             }
             if(super.getUnitController().getBossUnit()==null && super.getLevelController().isBossFree()){
-                JOptionPane.showMessageDialog(null, "You finish level two");
-                runThread=false;
-                super.getLevelController().levelUp(this);
-                
+//            if(super.getUnitController().getBossUnit()==null ){
+                if(super.getMessageLabel()==null && !super.isWinLevel()){
+                    CommonUtils.message="!You finish level Two!";
+                    CommonUtils.typeMessage=4;
+                    super.setMessageLabel( super.getLevelController().isNewMessage());
+                    super.setWinLevel(true);
+                }else if(super.isWinLevel() && super.getMessageLabel()==null){
+                    runThread=false;
+                    super.getLevelController().levelUp(this);
+                }
             }
             repaint();
         }
