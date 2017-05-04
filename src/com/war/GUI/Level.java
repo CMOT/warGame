@@ -32,9 +32,12 @@ public class Level extends Canvas{
     private volatile ItemController itemController;
     private MessageLabel messageLabel;
     private Thread hilo;
+    private boolean winLevel;
     
     public Level(int width, int height, int difficult){
         this.setBounds(0, 0, width , height);
+        winLevel=false;
+        
     }
 
     /**
@@ -177,6 +180,19 @@ public class Level extends Canvas{
     public void setMessageLabel(MessageLabel messageLabel) {
         this.messageLabel = messageLabel;
     }
-    
+
+    /**
+     * @return the winLevel
+     */
+    public boolean isWinLevel() {
+        return winLevel;
+    }
+
+    /**
+     * @param winLevel the winLevel to set
+     */
+    public void setWinLevel(boolean winLevel) {
+        this.winLevel = winLevel;
+    }
     
 }

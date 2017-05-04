@@ -241,6 +241,7 @@ public class PanelInfo extends javax.swing.JPanel {
             }
         }else{
             CommonUtils.message="You need 180 points for create this unit!";
+            CommonUtils.typeMessage=1;
         }
     }//GEN-LAST:event_lblUnit1MouseClicked
 
@@ -256,6 +257,7 @@ public class PanelInfo extends javax.swing.JPanel {
             }
         }else{
             CommonUtils.message="You need 180 points for create this unit!";
+            CommonUtils.typeMessage=1;
         }
     }//GEN-LAST:event_lblUnit2MouseClicked
 
@@ -271,6 +273,7 @@ public class PanelInfo extends javax.swing.JPanel {
             }
         }else{
             CommonUtils.message="You need 180 points for create this unit!";
+            CommonUtils.typeMessage=1;
         }
     }//GEN-LAST:event_lblUnit3MouseClicked
 
@@ -280,6 +283,7 @@ public class PanelInfo extends javax.swing.JPanel {
             CommonUtils.selected=null;
         }else{
             CommonUtils.message="You need 100 points for get a bomb item!";
+            CommonUtils.typeMessage=1;
         }
     }//GEN-LAST:event_jLabel1MouseClicked
 

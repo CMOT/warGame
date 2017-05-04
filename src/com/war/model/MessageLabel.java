@@ -20,10 +20,10 @@ public class MessageLabel {
     private int y;
     private String message;
     private int counter;
-    private Color color;
+    private int color;
     private boolean finish;
     
-    public MessageLabel(int x, String message, Color color){
+    public MessageLabel(int x, String message, int color){
         this.x=x;
         this.y=-20;
         this.message=message;
@@ -33,14 +33,14 @@ public class MessageLabel {
     }
 
     public void paint(Graphics2D g2d){
-        Font font = new Font(Font.SANS_SERIF, Font.BOLD, 20);
+        Font font = new Font(Font.SANS_SERIF, Font.BOLD, 24);
         g2d.setFont(font);
-        g2d.setColor(getColor());
+        g2d.setColor(getSelectedColor(color));
         g2d.drawString(message, x, y);
-        if(counter<100){
-            y+=3;
-        }else if(counter > 180){
+        if(counter<60){
             y+=4;
+        }else if(counter > 160){
+            y+=5;
         }
         if(y > CommonUtils.height){
             setFinish(true);
@@ -48,6 +48,24 @@ public class MessageLabel {
         counter++;
     }
     
+    public Color getSelectedColor(int numColor){
+        Color color= new Color(0, 0, 0);
+        switch(numColor){
+            case 1:
+                color =new Color(1f,0f,0f,.5f );
+                break;
+            case 2:
+                color =new Color(0f,1f,0f,.5f );
+                break;
+            case 3:
+                color =new Color(0f,0f,1f,.5f );
+                break;
+            case 4:
+                color =new Color(.3f,.4f,.2f,.6f );
+                break;
+        }
+        return color;
+    }
     /**
      * @return the x
      */
@@ -105,20 +123,6 @@ public class MessageLabel {
     }
 
     /**
-     * @return the color
-     */
-    public Color getColor() {
-        return color;
-    }
-
-    /**
-     * @param color the color to set
-     */
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
-    /**
      * @return the finish
      */
     public boolean isFinish() {
@@ -130,6 +134,20 @@ public class MessageLabel {
      */
     public void setFinish(boolean finish) {
         this.finish = finish;
+    }
+
+    /**
+     * @return the color
+     */
+    public int getColor() {
+        return color;
+    }
+
+    /**
+     * @param color the color to set
+     */
+    public void setColor(int color) {
+        this.color = color;
     }
     
     

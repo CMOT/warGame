@@ -52,7 +52,7 @@ public class LevelController {
     public MessageLabel isNewMessage(){
             String message=CommonUtils.message;
             CommonUtils.message="";
-            return new MessageLabel(200, message, Color.RED);
+            return new MessageLabel(200, message, 1);
     }
 
     public void levelUp(Level level){

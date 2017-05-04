@@ -27,7 +27,6 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -235,9 +234,16 @@ public class LevelOne extends Level implements Runnable{
                 }
             }
             if(super.getUnitController().getBossUnit()==null && super.getLevelController().isBossFree()){
-                JOptionPane.showMessageDialog(null, "You finish level one");
-                runThread=false;
-                super.getLevelController().levelUp(this);
+//            if(super.getUnitController().getBossUnit()==null ){
+                if(super.getMessageLabel()==null && !super.isWinLevel()){
+                    CommonUtils.message="!You finish Level One!";
+                    CommonUtils.typeMessage=4;
+                    super.setMessageLabel( super.getLevelController().isNewMessage());
+                    super.setWinLevel(true);
+                }else if(super.isWinLevel() && super.getMessageLabel()==null){
+                    runThread=false;
+                    super.getLevelController().levelUp(this);
+                }
             }
             
             repaint();

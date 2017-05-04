@@ -26,6 +26,7 @@ public class CommonUtils {
     public static int difficult=0;
     public static boolean itemselect=false;
     public static String message="";
+    public static int typeMessage=1;
     
     private CommonUtils(){
         
