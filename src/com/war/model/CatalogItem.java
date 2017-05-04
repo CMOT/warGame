@@ -12,6 +12,6 @@ package com.war.model;
 public class CatalogItem {
     
     public Item getBombItem(int x, int moveY, int duration ,int team){
-        return new Bomb(10, x, -40, "bombItem", team, "bombActive", moveY, duration);
+        return new Bomb(10, x, -40, "bombItem", team, "bombAction", moveY, duration);
     }
 }

@@ -230,7 +230,7 @@ public class PanelInfo extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblUnit1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblUnit1MouseClicked
-        if(CommonUtils.points>59){
+        if(CommonUtils.points>=60){
             if(unitCharge.getValue()!=100){
                 if(!CommonUtils.createUnit){
                     CommonUtils.createUnit=true;
@@ -239,11 +239,13 @@ public class PanelInfo extends javax.swing.JPanel {
                     CommonUtils.points-=60;
                 }
             }
+        }else{
+            CommonUtils.message="You need 180 points for create this unit!";
         }
     }//GEN-LAST:event_lblUnit1MouseClicked
 
     private void lblUnit2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblUnit2MouseClicked
-        if(CommonUtils.points>119){
+        if(CommonUtils.points>=120){
             if(unitCharge.getValue()!=100){
                 if(!CommonUtils.createUnit){
                     CommonUtils.createUnit=true;
@@ -252,11 +254,13 @@ public class PanelInfo extends javax.swing.JPanel {
                     CommonUtils.points-=120;
                  }
             }
+        }else{
+            CommonUtils.message="You need 180 points for create this unit!";
         }
     }//GEN-LAST:event_lblUnit2MouseClicked
 
     private void lblUnit3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblUnit3MouseClicked
-        if(CommonUtils.points>179){
+        if(CommonUtils.points>=180){
             if(unitCharge.getValue()!=100){
                 if(!CommonUtils.createUnit){
                     CommonUtils.createUnit=true;
@@ -265,11 +269,18 @@ public class PanelInfo extends javax.swing.JPanel {
                     CommonUtils.points-=180;
                  }
             }
+        }else{
+            CommonUtils.message="You need 180 points for create this unit!";
         }
     }//GEN-LAST:event_lblUnit3MouseClicked
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-        CommonUtils.itemselect=true;
+        if(CommonUtils.points>=100){
+            CommonUtils.itemselect=true;
+            CommonUtils.selected=null;
+        }else{
+            CommonUtils.message="You need 100 points for get a bomb item!";
+        }
     }//GEN-LAST:event_jLabel1MouseClicked
 
 

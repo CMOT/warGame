@@ -434,6 +434,7 @@ public class UnitController {
     
     public int boomBomb(Bomb bomb){
         if(bomb.isDamaging()){
+            System.out.println("Dañando en el counter: "+ bomb.getCounter());
             for(Unit unitEnemy :  listEnemies){
                 if(bomb.getCollisionRec().contains(unitEnemy.getCollisionRec())){
                     unitEnemy.setHealtPoints(unitEnemy.getHealtPoints()-bomb.getPower());

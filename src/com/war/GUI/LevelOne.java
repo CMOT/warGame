@@ -7,6 +7,7 @@ package com.war.GUI;
 
 import com.war.controller.BuildController;
 import com.war.controller.BulletController;
+import com.war.controller.ItemController;
 import com.war.controller.LevelController;
 import com.war.controller.UnitController;
 import com.war.model.Bomb;
@@ -47,6 +48,7 @@ public class LevelOne extends Level implements Runnable{
         super.setUnitController(new UnitController());
         super.setBuildController( new BuildController());
         super.setBulletController( new BulletController());
+        super.setItemController( new ItemController());
         super.getUnitController().fillListEnemies(difficult, width-200, height-400, "clown");
         super.getUnitController().fillListAllies(100, 100, difficult);
         super.getBuildController().fillBuildEnemies(this.getWidth()-140,200, 2, difficult);
@@ -62,7 +64,7 @@ public class LevelOne extends Level implements Runnable{
     public void paint(Graphics g){
         super.paint(g);
         Graphics2D g2d=(Graphics2D) g;
-        g2d.drawImage(background.getImage(), 0, 0, this.getWidth(), this.getHeight(), this);
+//        g2d.drawImage(background.getImage(), 0, 0, this.getWidth(), this.getHeight(), this);
         for(Build buildA:getBuildController().getListBuildAllies() ){
             if(buildA instanceof Metropoly){
                 Metropoly metro= (Metropoly) buildA;
@@ -107,6 +109,12 @@ public class LevelOne extends Level implements Runnable{
         g2d.setFont(font);
         g2d.drawString("Level: "+Menu.levelNumber, 10, 30);
         g2d.drawString("Points: "+CommonUtils.points, 10, 60);
+        if(super.getMessageLabel()!=null){
+            super.getMessageLabel().paint(g2d);
+            if(super.getMessageLabel().isFinish()){
+                super.setMessageLabel(null);
+            }
+        }
 //        g2d.drawString("Time: "+super.getLevelController().getTime(), CommonUtils.width-150, 30);
     }
     
@@ -194,12 +202,16 @@ public class LevelOne extends Level implements Runnable{
                         Bomb bomb = (Bomb) item;
                         if(super.getUnitController().boomBomb(bomb)==1){
                             super.getItemController().getItemList().remove(item);
+                            break;
                         }
                     }
                 }
             }
             
             super.getLevelController().goTime();
+            if(!CommonUtils.message.isEmpty()){
+                super.setMessageLabel( super.getLevelController().isNewMessage());
+            }
             if(super.getBuildController().createUnit()){
                 super.getUnitController().createUnit();
             }
@@ -227,6 +239,7 @@ public class LevelOne extends Level implements Runnable{
                 runThread=false;
                 super.getLevelController().levelUp(this);
             }
+            
             repaint();
         }
     }

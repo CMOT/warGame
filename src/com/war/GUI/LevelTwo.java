@@ -7,6 +7,7 @@ package com.war.GUI;
 
 import com.war.controller.BuildController;
 import com.war.controller.BulletController;
+import com.war.controller.ItemController;
 import com.war.controller.LevelController;
 import com.war.controller.UnitController;
 import com.war.model.Build;
@@ -45,6 +46,7 @@ public class LevelTwo extends Level implements Runnable{
         super.setUnitController(new UnitController());
         super.setBuildController( new BuildController());
         super.setBulletController( new BulletController());
+        super.setItemController( new ItemController());
         super.getUnitController().fillListEnemies(difficult, width-200, height-400, "momia");
         super.getUnitController().fillListAllies(100, 100, difficult);
         super.getBuildController().fillBuildEnemies(this.getWidth()-140,200, 2, difficult);

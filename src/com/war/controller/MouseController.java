@@ -44,6 +44,7 @@ public class MouseController implements MouseListener {
         if (e.getModifiers() == 16) {
             if(CommonUtils.itemselect ){
                 level.getItemController().addItem(e.getX(), e.getY(), 1, 1);
+                CommonUtils.points -=100; 
                 CommonUtils.itemselect=false;
             }else{
                 CommonUtils.selected=null;
@@ -101,6 +102,7 @@ public class MouseController implements MouseListener {
                 }
             }
         } else if (e.getModifiers() == 4 && selected != null) {
+            
             selected.setMove(true);
             selected.setTarget(null);
             for (Unit unit : level.getUnitController().getListEnemies()) {
@@ -143,6 +145,8 @@ public class MouseController implements MouseListener {
                  selected.setMoveX(e.getX() - selected.getX() > 0 ? 2 : -2);
                  selected.setMoveY(e.getY() - selected.getY() > 0 ? 2 : -2);
             }
+        } else if (e.getModifiers() == 4 && CommonUtils.itemselect ){
+            CommonUtils.itemselect=false;
         }
     }
 

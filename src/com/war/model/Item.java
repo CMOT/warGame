@@ -41,7 +41,7 @@ public class Item {
     }
     
     public boolean finish(){
-        return counter>=getDuration();
+        return counter>getDuration();
     }
     
     /**

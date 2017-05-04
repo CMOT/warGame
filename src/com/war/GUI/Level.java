@@ -10,6 +10,7 @@ import com.war.controller.BulletController;
 import com.war.controller.ItemController;
 import com.war.controller.LevelController;
 import com.war.controller.UnitController;
+import com.war.model.MessageLabel;
 import com.war.model.Target;
 import com.war.model.Unit;
 import java.awt.Canvas;
@@ -28,7 +29,8 @@ public class Level extends Canvas{
     private BuildController buildController;
     private BulletController bulletController;
     private LevelController levelController;
-    private ItemController itemController;
+    private volatile ItemController itemController;
+    private MessageLabel messageLabel;
     private Thread hilo;
     
     public Level(int width, int height, int difficult){
@@ -160,6 +162,20 @@ public class Level extends Canvas{
      */
     public void setItemController(ItemController itemController) {
         this.itemController = itemController;
+    }
+
+    /**
+     * @return the messageLabel
+     */
+    public MessageLabel getMessageLabel() {
+        return messageLabel;
+    }
+
+    /**
+     * @param messageLabel the messageLabel to set
+     */
+    public void setMessageLabel(MessageLabel messageLabel) {
+        this.messageLabel = messageLabel;
     }
     
     

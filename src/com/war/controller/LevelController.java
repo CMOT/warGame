@@ -12,7 +12,9 @@ import com.war.GUI.LevelTwo;
 import com.war.GUI.Menu;
 import static com.war.GUI.Menu.actualLevel;
 import com.war.GUI.PanelInfo;
+import com.war.model.MessageLabel;
 import com.war.utils.CommonUtils;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.HeadlessException;
 import java.awt.Point;
@@ -45,6 +47,12 @@ public class LevelController {
         seg=(int)timeCount%60;
         time=min+":"+ (seg<10?"0"+(int)seg :(int)seg);
         PanelInfo.unitCharge.setValue(CommonUtils.timeUnit);
+    }
+    
+    public MessageLabel isNewMessage(){
+            String message=CommonUtils.message;
+            CommonUtils.message="";
+            return new MessageLabel(200, message, Color.RED);
     }
 
     public void levelUp(Level level){
@@ -80,10 +88,10 @@ public class LevelController {
         try{
             switch(cursor){
                 case "sword":
-                    level.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("espada.png").getImage(),new Point(10,10),"custom cursor"));
+                    level.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(getClass().getResource("/images/espada.png")).getImage(),new Point(10,10),"custom cursor"));
                     break;
                 case "item":
-                    level.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("bomb.png").getImage(),new Point(10,10),"custom cursor"));
+                    level.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(getClass().getResource("/images/bomb.png")).getImage(),new Point(10,10),"custom cursor"));
                     break;
                 default :
                     level.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));

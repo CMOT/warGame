@@ -20,16 +20,20 @@ public class Bomb extends Item{
     
     public Bomb(int power, int x, int y, String item, int team, String bombAction, int moveY,int duration) {
         super(power, x-15, y, item, duration, team);
-        this.bombAction = new ImageIcon(getClass().getResource(bombAction));
+        this.bombAction = new ImageIcon(getClass().getResource("/images/"+bombAction+".gif"));
         this.moveY= moveY;
     }
     
     public void paint(Graphics2D g2d){
-        g2d.drawImage(getImage().getImage(), getX(), getY(), 30, 30, null);
-        if(this.getY() < moveY-10){
-            down();
-        }else{
-            super.setActive(true);
+        g2d.drawImage(getImage().getImage(), getX(), getY(), null);
+        if(!super.isActive()){
+            if(this.getY() < moveY-10){
+                down();
+            }else{
+                super.setImage(bombAction);
+                super.getCollisionRec().setSize(bombAction.getIconWidth(), bombAction.getIconHeight());
+                super.setActive(true);
+            }
         }
     }
     
@@ -38,7 +42,8 @@ public class Bomb extends Item{
     }
     
     public boolean isDamaging(){
-        if(getCounter()==100 || getCounter()==200 || getCounter()==300 || getCounter()==400){
+//        if(getCounter()==100 || getCounter()==200 || getCounter()==300 || getCounter()==400){
+        if(getCounter()%40==0){
             return true;
         }
         return false;
