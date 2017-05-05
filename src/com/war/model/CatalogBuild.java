@@ -18,19 +18,19 @@ public class CatalogBuild {
     
     
     public Build getMetropoly(int x, int y, int team){
-        return new Metropoly("Fun House", 20*CommonUtils.difficult, 30 , x, y , "funhouse", team );
+        return new Metropoly("Fun House", 100*CommonUtils.difficult, 30 , x, y , "funhouse", team );
     }
     
     public Build getTower(int power ,int x, int y, int team){
-        return new Tower(power, 50,"Tower", 20*CommonUtils.difficult, 10 , x, y , "tower", team , "arrow");
+        return new Tower(power, 50,"Tower", 100*CommonUtils.difficult, 10 , x, y , "tower", team , "arrow");
     }
     
     public Build getPyramid(int x, int y, int team){
-        return new Metropoly("Pyramid", 20*CommonUtils.difficult, 30 , x, y , "piramide", team );
+        return new Metropoly("Pyramid", 100*CommonUtils.difficult, 30 , x, y , "piramide", team );
     }
     
     public Build getMansion(int x, int y, int team){
-        return new Metropoly("Mansion", 20*CommonUtils.difficult, 30 , x, y , "mansion", team );
+        return new Metropoly("Mansion", 100*CommonUtils.difficult, 30 , x, y , "mansion", team );
     }
     
     public Build getTrainningBuild(int x, int y, int team){

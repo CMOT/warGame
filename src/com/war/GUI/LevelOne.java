@@ -14,6 +14,7 @@ import com.war.model.Bomb;
 import com.war.model.Build;
 import com.war.model.Bullet;
 import com.war.model.Item;
+import com.war.model.ItemOr;
 import com.war.model.Marine;
 import com.war.model.Metropoly;
 import com.war.model.Target;
@@ -49,10 +50,10 @@ public class LevelOne extends Level implements Runnable{
         super.setBuildController( new BuildController());
         super.setBulletController( new BulletController());
         super.setItemController( new ItemController());
-//        super.getUnitController().fillListEnemies(difficult, width-200, height-400, "clown");
+        super.getUnitController().fillListEnemies(difficult, width-200, height-400, "clown");
         super.getUnitController().fillListAllies(100, 100, difficult);
         super.getBuildController().fillBuildEnemies(this.getWidth()-140,200, 2, difficult);
-//        super.getBuildController().fillBuildAllies(30, 200, 1);
+        super.getBuildController().fillBuildAllies(30, 200, 1);
         super.setLevelController( new LevelController(difficult));
         eliminated= null;
         runThread=true;
@@ -64,7 +65,7 @@ public class LevelOne extends Level implements Runnable{
     public void paint(Graphics g){
         super.paint(g);
         Graphics2D g2d=(Graphics2D) g;
-//        g2d.drawImage(background.getImage(), 0, 0, this.getWidth(), this.getHeight(), this);
+        g2d.drawImage(background.getImage(), 0, 0, this.getWidth(), this.getHeight(), this);
         for(Build buildA:getBuildController().getListBuildAllies() ){
             if(buildA instanceof Metropoly){
                 Metropoly metro= (Metropoly) buildA;
@@ -79,7 +80,6 @@ public class LevelOne extends Level implements Runnable{
                 Tower tower = (Tower) build;
                 tower.paint(g2d);
             }
-            
         }
         if(super.getUnitController().getBossUnit()!=null){
             super.getUnitController().getBossUnit().paint(g2d);
@@ -216,6 +216,13 @@ public class LevelOne extends Level implements Runnable{
                             break;
                         }
                     }
+                }else if(item instanceof ItemOr){
+                    ItemOr itemOr= (ItemOr) item;
+                    itemOr.upCounter();
+                    if(itemOr.finish()){
+                        super.getItemController().getItemList().remove(item);
+                        break;
+                    }
                 }
             }
             
@@ -247,7 +254,7 @@ public class LevelOne extends Level implements Runnable{
             }
             if(super.getUnitController().getBossUnit()==null && super.getLevelController().isBossFree()){
 //            if(super.getUnitController().getBossUnit()==null ){
-                if(super.getMessageLabel()==null && !super.isWinLevel()){
+                if(super.getMessageLabel()==null && !super.isWinLevel()){   
                     CommonUtils.message="!You finish Level One!";
                     CommonUtils.typeMessage=4;
                     super.setMessageLabel( super.getLevelController().isNewMessage());

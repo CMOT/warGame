@@ -91,7 +91,10 @@ public class LevelController {
                     level.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(getClass().getResource("/images/espada.png")).getImage(),new Point(10,10),"custom cursor"));
                     break;
                 case "item":
-                    level.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(getClass().getResource("/images/bomb.png")).getImage(),new Point(10,10),"custom cursor"));
+                    level.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(getClass().getResource("/images/target.png")).getImage(),new Point(10,10),"custom cursor"));
+                    break;
+                case "itemOr":
+                    level.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(getClass().getResource("/images/items.png")).getImage(), new Point(10, 10), "Cursor w"));
                     break;
                 default :
                     level.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));

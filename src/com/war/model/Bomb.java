@@ -38,8 +38,8 @@ public class Bomb extends Item{
     }
     
     public void down(){
-        this.setY(this.getY()+1);
-        this.getCollisionRec().y++;
+        this.setY(this.getY()+2);
+        this.getCollisionRec().y+=2;
     }
     
     public boolean isDamaging(){
