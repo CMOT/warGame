@@ -7,6 +7,7 @@ package com.war.controller;
 
 import com.war.model.Build;
 import com.war.model.Bullet;
+import com.war.model.Tower;
 import com.war.model.Unit;
 import com.war.utils.CommonUtils;
 import java.util.ArrayList;
@@ -108,6 +109,10 @@ public class BulletController {
         return removedBuild;
     }
      
+    public void shootFromBuilds(Tower tower ){
+        listBulletsEnemies.add(new Bullet(tower.getPower(), tower.getX()+5, tower.getY()+10, tower.getBulletType(), tower.getTeam(), 0, 0));
+    }
+            
     public Build shootBuilds(ArrayList<Build> list){
         boolean removed=false;
         Build removedBuild=null;

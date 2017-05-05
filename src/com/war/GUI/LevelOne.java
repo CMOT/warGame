@@ -17,6 +17,7 @@ import com.war.model.Item;
 import com.war.model.Marine;
 import com.war.model.Metropoly;
 import com.war.model.Target;
+import com.war.model.Tower;
 import com.war.model.Unit;
 import com.war.utils.CommonUtils;
 import java.awt.Color;
@@ -48,10 +49,10 @@ public class LevelOne extends Level implements Runnable{
         super.setBuildController( new BuildController());
         super.setBulletController( new BulletController());
         super.setItemController( new ItemController());
-        super.getUnitController().fillListEnemies(difficult, width-200, height-400, "clown");
+//        super.getUnitController().fillListEnemies(difficult, width-200, height-400, "clown");
         super.getUnitController().fillListAllies(100, 100, difficult);
         super.getBuildController().fillBuildEnemies(this.getWidth()-140,200, 2, difficult);
-        super.getBuildController().fillBuildAllies(30, 200, 1);
+//        super.getBuildController().fillBuildAllies(30, 200, 1);
         super.setLevelController( new LevelController(difficult));
         eliminated= null;
         runThread=true;
@@ -63,7 +64,7 @@ public class LevelOne extends Level implements Runnable{
     public void paint(Graphics g){
         super.paint(g);
         Graphics2D g2d=(Graphics2D) g;
-        g2d.drawImage(background.getImage(), 0, 0, this.getWidth(), this.getHeight(), this);
+//        g2d.drawImage(background.getImage(), 0, 0, this.getWidth(), this.getHeight(), this);
         for(Build buildA:getBuildController().getListBuildAllies() ){
             if(buildA instanceof Metropoly){
                 Metropoly metro= (Metropoly) buildA;
@@ -74,7 +75,11 @@ public class LevelOne extends Level implements Runnable{
             if(build instanceof Metropoly){
                 Metropoly metro= (Metropoly) build;
                 metro.paint(g2d);
+            }else if(build instanceof Tower){
+                Tower tower = (Tower) build;
+                tower.paint(g2d);
             }
+            
         }
         if(super.getUnitController().getBossUnit()!=null){
             super.getUnitController().getBossUnit().paint(g2d);
@@ -188,10 +193,17 @@ public class LevelOne extends Level implements Runnable{
 //            if((eliminated=super.getBulletController().shootBuildsAllies(super.getBuildController().getListBuildAllies()))!=null){
 //                 eliminated= super.getUnitController().deleteTargets(eliminated);
 //            }
-            for(Build metro: super.getBuildController().getListBuilds()){
-                boolean crear=super.getBuildController().equalsGame(metro.getHealtPoints());
-                if(crear){
-                    super.getUnitController().createEnemies(metro.getLifePoints()/metro.getHealtPoints()+super.getLevelController().getDifficult(), new Point(super.getBuildController().getListBuilds().get(0).getX(),super.getBuildController().getListBuilds().get(0).getY()), "clown");
+            for(Build build: super.getBuildController().getListBuilds()){
+                if(build instanceof Metropoly){
+                    boolean crear=super.getBuildController().equalsGame(build.getHealtPoints());
+                    if(crear){
+                        super.getUnitController().createEnemies(build.getLifePoints()/build.getHealtPoints()+super.getLevelController().getDifficult(), new Point(super.getBuildController().getListBuilds().get(0).getX(),super.getBuildController().getListBuilds().get(0).getY()), "clown");
+                    }
+                }else if(build instanceof Tower){
+                    Tower tower= (Tower) build;
+                    if(tower.shoot()){
+                        getBulletController().shootFromBuilds(tower);
+                    }
                 }
             }
              

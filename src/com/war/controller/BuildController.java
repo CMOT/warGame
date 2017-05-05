@@ -35,6 +35,7 @@ public class BuildController {
         switch(Menu.levelNumber){
             case 1:
                 getListBuilds().add(catalog.getMetropoly(x, y, team));
+                
                 break;
             case 2:
                 getListBuilds().add(catalog.getPyramid(x, y, team));
@@ -43,7 +44,19 @@ public class BuildController {
                 getListBuilds().add(catalog.getMansion(x, y, team));
                 break;
         }
-        
+        fillOtherEnemyBuilds(team,difficult);
+    }
+    
+    public void fillOtherEnemyBuilds(int team ,int difficult){
+        for(int i=1;i <= difficult; i++){
+            
+//            int x = (int)(Math.random()*400+50);
+            int x = (int)((Math.random()*100)+450);
+            int y = (int)(Math.random()*120);
+            y=(y*i)+50;
+            System.out.println("x:"+x+" y:"+y);
+            getListBuilds().add(catalog.getTower(50, x, y, team));
+        }
     }
     
     public void fillBuildAllies(int x, int y, int team){

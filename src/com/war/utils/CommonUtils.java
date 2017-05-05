@@ -53,8 +53,7 @@ public class CommonUtils {
     }
      
      public static int getPercent(int currentValue, int maxValue, int sizeBar){
-         
-         return (currentValue*sizeBar/maxValue );
+         return (currentValue*sizeBar/ (maxValue==0?1:maxValue) );
      }
      public static int calcX(int catOp, int catAd, double time){
          return (int)(15*( catAd/getHipotenusa(catOp, catAd) )*time );
