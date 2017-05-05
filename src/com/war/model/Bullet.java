@@ -49,21 +49,7 @@ public class Bullet {
 //        if(isShooted()){
 //            g.draw(collisionRec);
             g.drawImage(getImage().getImage(), this.getX(), this.getY(), null);
-            if(this.team==1){
-                this.x+=4;
-                this.collisionRec.x+=4;
-            }else{
-                this.x-=6;
-                this.collisionRec.x-=6;
-                if(angule>=.5){
-                    this.y+=this.angule*5;
-                    this.collisionRec.y+=this.angule*5;
-                }else{
-                    this.y-=this.angule*5;
-                    this.collisionRec.y-=this.angule*5;
-                }
-                
-            }
+            shoot();
 //            if(getTeam()==2){
 //                g.setColor(Color.red);
     //            g.draw(super.getRatio());
@@ -76,6 +62,23 @@ public class Bullet {
 //            this.time+=.1;
     }
 
+    public void shoot(){
+        if(this.team==1){
+            this.x+=4;
+            this.collisionRec.x+=4;
+        }else{
+            this.x-=6;
+            this.collisionRec.x-=6;
+            if(angule>=.5){
+                this.y+=this.angule*5;
+                this.collisionRec.y+=this.angule*5;
+            }else{
+                this.y-=this.angule*5;
+                this.collisionRec.y-=this.angule*5;
+            }
+        }
+    }
+    
     /**
      * @return the power
      */

@@ -32,8 +32,8 @@ public class PanelInfo extends javax.swing.JPanel {
         if(selected!=null){
             int hp=(int)((selected.getHealtPoints()*100)/selected.getLifePoints());
             imageLabel.setIcon(selected.getImage());
-            unitLabel.setText("Unit :"+selected.getName());
-            forceLabel.setText("Force :"+selected.getForce());
+            unitLabel.setText("Unit : "+selected.getName());
+            forceLabel.setText("Force : "+selected.getForce());
             piLabel.setText("HP : "+selected.getHealtPoints() +"/" +selected.getLifePoints());
             lifeBar.setValue( hp);
         }else{
@@ -49,7 +49,7 @@ public class PanelInfo extends javax.swing.JPanel {
         if(selected!=null){
             int hp=(int)((selected.getHealtPoints()*100)/selected.getLifePoints());
             imageLabel.setIcon(selected.getImage());
-            unitLabel.setText("Build :"+selected.getName());
+            unitLabel.setText("Build : "+selected.getName());
             forceLabel.setText("Capacity :"+selected.getCapacity());
             piLabel.setText("HP : "+selected.getHealtPoints() +"/" +selected.getLifePoints());
             lifeBar.setValue(hp);

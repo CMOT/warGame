@@ -18,7 +18,7 @@ public class CommonUtils {
     public static int width=0;
     public static int height=0;
     public static double time=0;
-    public static int points=200;
+    public static int points=100;
     public static Target selected= null;
     public static int timeUnit=0;
     public static boolean createUnit=false;
@@ -53,8 +53,7 @@ public class CommonUtils {
     }
      
      public static int getPercent(int currentValue, int maxValue, int sizeBar){
-         
-         return (currentValue*sizeBar/((maxValue == 0) ? 1 : maxValue) );
+         return (currentValue * sizeBar/((maxValue == 0) ? 1 : maxValue) );
      }
      public static int calcX(int catOp, int catAd, double time){
          return (int)(15*( catAd/getHipotenusa(catOp, catAd) )*time );
