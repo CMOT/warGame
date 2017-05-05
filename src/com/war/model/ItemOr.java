@@ -11,4 +11,8 @@ package com.war.model;
  */
 public class ItemOr extends Item{
     
+    public ItemOr(int power, int x, int y, String item, int duration, int team) {
+        super(power, x, y, item, duration, team);
+    }
+    
 }
