@@ -52,7 +52,7 @@ public class LevelController {
     public MessageLabel isNewMessage(){
             String message=CommonUtils.message;
             CommonUtils.message="";
-            return new MessageLabel(200, message, 1);
+            return new MessageLabel(200, message, CommonUtils.typeMessage);
     }
 
     public void levelUp(Level level){
@@ -66,17 +66,17 @@ public class LevelController {
         }
         switch(Menu.levelNumber){
             case 1:
+                Menu.levelNumber++;
                 newLevel = new LevelTwo(level.getWidth(), level.getHeight(), CommonUtils.difficult);
                 break;
             case 2:
+                Menu.levelNumber++;
                 newLevel = new LevelThree(level.getWidth(), level.getHeight(), CommonUtils.difficult);
                 break;
             case 3:
-                
                 break;
         }
         if(newLevel!=null){
-            Menu.levelNumber++;
             Menu.actualLevel= newLevel;
             actualLevel.addMouseListener(new MouseController(newLevel, info ));
             Menu.panelCanvas.add(actualLevel);

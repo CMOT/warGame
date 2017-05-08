@@ -146,7 +146,7 @@ public class LevelOne extends Level implements Runnable{
             try {
                 hilo.sleep(40);
             } catch (InterruptedException ex) {}
-//            if(!super.isWinLevel()){
+            if(!super.isWinLevel()){
                 if(!CommonUtils.itemselect.isEmpty()){
                     getLevelController().changeCursor(this,"item");
                 }else{
@@ -253,21 +253,20 @@ public class LevelOne extends Level implements Runnable{
                         super.getUnitController().setBossUnit(null);
                     }
                 }
-                if(super.getUnitController().getBossUnit()==null && super.getLevelController().isBossFree()){
-    //            if(super.getUnitController().getBossUnit()==null ){
-                    if(super.getMessageLabel()==null && !super.isWinLevel()){
-                        CommonUtils.message="!You finish Level One!";
-                        CommonUtils.typeMessage=4;
-                        super.setMessageLabel( super.getLevelController().isNewMessage());
-                        super.setWinLevel(true);
-                    }else if(super.isWinLevel() && super.getMessageLabel()==null){
-                        runThread=false;
-                        super.getLevelController().levelUp(this);
-                    }
+            }
+            if(super.getUnitController().getBossUnit()==null && super.getLevelController().isBossFree()){
+//            if(super.getUnitController().getBossUnit()==null ){
+                if(super.getMessageLabel()==null && !super.isWinLevel()){
+                    CommonUtils.message="!You finish Level One!";
+                    CommonUtils.typeMessage=4;
+                    super.setMessageLabel( super.getLevelController().isNewMessage());
+                    super.setWinLevel(true);
+                }else if(super.isWinLevel() && super.getMessageLabel()==null){
+                    runThread=false;
+                    super.getLevelController().levelUp(this);
                 }
-//            }
+            }
             repaint();
         }
     }
-    
 }
