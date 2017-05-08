@@ -11,10 +11,8 @@ import com.war.model.Build;
 import com.war.model.Unit;
 import com.war.utils.CommonUtils;
 import java.awt.Point;
-import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import javax.swing.ImageIcon;
 
 /**
  *
@@ -42,10 +40,10 @@ public class MouseController implements MouseListener {
     public void mousePressed(MouseEvent e) {
         
         if (e.getModifiers() == 16) {
-            if(CommonUtils.itemselect ){
-                level.getItemController().addItem(e.getX(), e.getY(), 1, 1);
+            if(!CommonUtils.itemselect.isEmpty() ){
+                level.getItemController().addItem(e.getX(), e.getY(), 1);
                 CommonUtils.points -=100; 
-                CommonUtils.itemselect=false;
+                CommonUtils.itemselect="";
             }else{
                 CommonUtils.selected=null;
                 for (Unit unit : level.getUnitController().getListAllies()) {
@@ -145,8 +143,8 @@ public class MouseController implements MouseListener {
                  selected.setMoveX(e.getX() - selected.getX() > 0 ? 2 : -2);
                  selected.setMoveY(e.getY() - selected.getY() > 0 ? 2 : -2);
             }
-        } else if (e.getModifiers() == 4 && CommonUtils.itemselect ){
-            CommonUtils.itemselect=false;
+        } else if (e.getModifiers() == 4 && !CommonUtils.itemselect.isEmpty() ){
+            CommonUtils.itemselect="";
         }
     }
 

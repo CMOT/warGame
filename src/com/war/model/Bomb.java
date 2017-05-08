@@ -5,6 +5,7 @@
  */
 package com.war.model;
 
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import javax.swing.ImageIcon;
 
@@ -22,16 +23,18 @@ public class Bomb extends Item{
         super(power, x-15, y, item, duration, team);
         this.bombAction = new ImageIcon(getClass().getResource("/images/"+bombAction+".gif"));
         this.moveY= moveY;
+        
     }
     
     public void paint(Graphics2D g2d){
-        g2d.drawImage(getImage().getImage(), getX(), getY(), null);
+        g2d.drawImage(getImage().getImage(), getX(), getY(),super.getDimensionFire().width,super.getDimensionFire().height, null);
         if(!super.isActive()){
             if(this.getY() < moveY-10){
                 down();
             }else{
+                super.setDimensionFire(new Dimension(this.bombAction.getIconWidth()<50?this.bombAction.getIconWidth()+20:90, this.bombAction.getIconHeight()<50?this.bombAction.getIconHeight()+20:90));
                 super.setImage(bombAction);
-                super.getCollisionRec().setSize(bombAction.getIconWidth(), bombAction.getIconHeight());
+                super.getCollisionRec().setSize(super.getDimensionFire().width, super.getDimensionFire().height);
                 super.setActive(true);
             }
         }

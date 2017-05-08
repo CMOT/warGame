@@ -7,6 +7,7 @@ package com.war.model;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.Random;
 import javax.swing.ImageIcon;
 
 /**
@@ -39,8 +40,8 @@ public class Bullet {
         this.collisionRec = new Rectangle(x, y, getImage().getIconWidth(), getImage().getIconHeight());
         this.team= team;
         this.shooted=false;
-        this.moveX=targetX;
-        this.moveY=targetY;
+        this.moveX=(int)((Math.random()*5)+2);
+        this.moveY=(int)((Math.random()*5)+2);
         this.time=0.0;
         this.angule= Math.random();
         

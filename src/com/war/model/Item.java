@@ -5,6 +5,7 @@
  */
 package com.war.model;
 
+import java.awt.Dimension;
 import java.awt.Rectangle;
 import javax.swing.ImageIcon;
 
@@ -22,17 +23,20 @@ public class Item {
     private int counter;
     private int duration;
     private boolean active;
+    private Dimension dimensionFire;
 
     public Item(int power, int x, int y, String item, int duration,int team) {
         this.power = power;
         this.x = x;
         this.y = y;
         this.image = new ImageIcon(getClass().getResource("/images/"+item+".gif"));
+        dimensionFire = new Dimension(30, 30);
         this.collisionRec = new Rectangle(x, y, getImage().getIconWidth(), getImage().getIconHeight());
         this.team = team;
         this.counter=0;
         this.duration=duration;
         this.active=false;
+        
     }
 
     
@@ -170,4 +174,18 @@ public class Item {
         this.active = active;
     }
 
+    /**
+     * @return the dimensionFire
+     */
+    public Dimension getDimensionFire() {
+        return dimensionFire;
+    }
+
+    /**
+     * @param dimensionFire the dimensionFire to set
+     */
+    public void setDimensionFire(Dimension dimensionFire) {
+        this.dimensionFire = dimensionFire;
+    }
+    
 }

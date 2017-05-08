@@ -7,6 +7,7 @@ package com.war.controller;
 
 import com.war.model.CatalogItem;
 import com.war.model.Item;
+import com.war.utils.CommonUtils;
 import java.util.ArrayList;
 
 /**
@@ -23,13 +24,14 @@ public class ItemController {
         catalogItem= new CatalogItem();
     }
     
-    public void addItem(int x, int y, int team, int type){
+    public void addItem(int x, int y, int team){
+        String type= CommonUtils.itemselect;
         switch(type){
-            case 1://Bomba
-                itemList.add(catalogItem.getBombItem(x, y, 210 ,team));
+            case "smallBomb"://Bomba
+                itemList.add(catalogItem.getSmallBombItem(x, y, 180 ,team));
                 break;
-            case 2://Por definir nuevos items
-//                itemList.add(catalogItem.getBombItem(x, y, team));
+            case "bigBomb"://Por definir nuevos items
+                itemList.add(catalogItem.getBigBombItem(x, y, 240 ,team));
                 break;
         }
         

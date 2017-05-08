@@ -27,7 +27,6 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -136,7 +135,7 @@ public class LevelTwo extends Level implements Runnable{
             try {
                 hilo.sleep(40);
             } catch (InterruptedException ex) {}
-            if(CommonUtils.itemselect){
+            if(!CommonUtils.itemselect.isEmpty()){
                 getLevelController().changeCursor(this,"item");
             }else{
                 getLevelController().changeCursor(this,"");

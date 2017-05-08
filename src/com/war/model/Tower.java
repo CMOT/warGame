@@ -31,9 +31,9 @@ public class Tower extends Build{
     @Override
     public void paint(Graphics2D g2d){
         g2d.setColor(Color.red);
-        g2d.fillRect(super.getX()+5, super.getY()-10, super.getImage().getIconWidth()-10, 4);
+        g2d.fillRect(super.getX()+5, super.getY()-10, super.getImage().getIconWidth()-5, 4);
         g2d.setColor(Color.green);
-        g2d.fillRect(super.getX()+5, super.getY()-10, CommonUtils.getPercent(super.getHealtPoints(), super.getLifePoints(),super.getImage().getIconWidth()-10), 4);
+        g2d.fillRect(super.getX()+5, super.getY()-10, CommonUtils.getPercent(super.getHealtPoints(), super.getLifePoints(),super.getImage().getIconWidth()-5), 4);
         g2d.drawImage(super.getImage().getImage(), getX(),getY(), null);
         
     }
