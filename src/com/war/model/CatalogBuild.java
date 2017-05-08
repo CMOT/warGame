@@ -16,13 +16,12 @@ public class CatalogBuild {
     public CatalogBuild() {
     }
     
-    
     public Build getMetropoly(int x, int y, int team){
         return new Metropoly("Fun House", 100*CommonUtils.difficult, 30 , x, y , "funhouse", team );
     }
     
     public Build getTower(int power ,int x, int y, int team){
-        return new Tower(power, 50,"Tower", 100*CommonUtils.difficult, 10 , x, y , "tower", team , "arrow");
+        return new Tower(power, 50,"Tower", 40*CommonUtils.difficult, 10 , x, y , "tower", team , "arrow");
     }
     
     public Build getPyramid(int x, int y, int team){

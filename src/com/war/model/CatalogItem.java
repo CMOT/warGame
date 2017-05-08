@@ -18,4 +18,8 @@ public class CatalogItem {
     public Item getBigBombItem(int x, int moveY, int duration ,int team){
         return new Bomb(12, x, -40, "bigBomb", team, "fireBomb", moveY, duration);
     }
+    
+    public Item getHealthItem(int x, int y, int duration, int team){
+        return new Health(20, x, y, "papel", duration, team);
+    }
 }

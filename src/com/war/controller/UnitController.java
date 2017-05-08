@@ -10,6 +10,7 @@ import com.war.model.Bomb;
 import com.war.model.Build;
 import com.war.model.Bullet;
 import com.war.model.CatalogUnit;
+import com.war.model.Health;
 import com.war.model.Target;
 import com.war.model.Unit;
 import com.war.utils.CommonUtils;
@@ -315,7 +316,7 @@ public class UnitController {
                 sold= units.getKratos(30, 200, 1);
                 break;
             case 3:
-                sold= units.getAmetrallador(30, 200, 1);
+                sold= units.getTank(30, 200, 1);
                 break;
             default:
                 sold=units.getMasterChief(30, 200, 1);
@@ -329,8 +330,8 @@ public class UnitController {
             getListAllies().add(sold);
             sold=null;
         }
-        
     }
+    
     public void createEnemies(int size, Point out, String type){
         for(int i=1; i<= size*2; i++){
             
@@ -453,6 +454,23 @@ public class UnitController {
         return 0;
     }
     
+    public int cureUnits(Health health){
+        if(health.isCuring()){
+            for(Unit unitAllie :  listAllies){
+                if(health.getCollisionRec().intersects(unitAllie.getCollisionRec())){
+                    unitAllie.setHealtPoints(unitAllie.getHealtPoints()-health.getPower());
+                    if(unitAllie.getHealtPoints()>=unitAllie.getLifePoints()){
+                        unitAllie.setHealtPoints(unitAllie.getLifePoints());
+                    }
+                }
+            }
+        }
+        health.upCounter();
+        if(health.finish()){
+            return 1;
+        }
+        return 0;
+    }
 //    public boolean numberOfBullets(int current, int max, int difficult){
 //        switch(difficult){
 //            case 1:

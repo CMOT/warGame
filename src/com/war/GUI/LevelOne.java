@@ -13,8 +13,8 @@ import com.war.controller.UnitController;
 import com.war.model.Bomb;
 import com.war.model.Build;
 import com.war.model.Bullet;
+import com.war.model.Health;
 import com.war.model.Item;
-import com.war.model.ItemOr;
 import com.war.model.Marine;
 import com.war.model.Metropoly;
 import com.war.model.Target;
@@ -84,6 +84,15 @@ public class LevelOne extends Level implements Runnable{
         if(super.getUnitController().getBossUnit()!=null){
             super.getUnitController().getBossUnit().paint(g2d);
         }
+        for (Item item : super.getItemController().getItemList()) {
+            if(item instanceof Bomb){
+                Bomb bomb = (Bomb) item;
+                bomb.paint(g2d);
+            }else if(item instanceof Health){
+                Health health= (Health) item;
+                health.paint(g2d);
+            }
+        }
         for(Unit allie: getUnitController().getListAllies()){
             if(allie instanceof Marine){
                 Marine marine= (Marine) allie;
@@ -101,12 +110,6 @@ public class LevelOne extends Level implements Runnable{
         }
         for(Bullet bullet2: super.getBulletController().getListBulletsEnemies()){
                  bullet2.paint(g2d);
-        }
-        for (Item item : super.getItemController().getItemList()) {
-            if(item instanceof Bomb){
-                Bomb bomb = (Bomb) item;
-                bomb.paint(g2d);
-            }
         }
         Font font= new Font("Arial", Font.ITALIC, 18);
         g2d.setColor(Color.green);
@@ -217,13 +220,13 @@ public class LevelOne extends Level implements Runnable{
                                 break;
                             }
                         }
-                    }else if(item instanceof ItemOr){
-                        ItemOr itemOr= (ItemOr) item;
-                        itemOr.upCounter();
-                        if(itemOr.finish()){
+                    }else if(item instanceof Health){
+                        Health health= (Health) item;
+                        if(super.getUnitController().cureUnits(health)==1){
                             super.getItemController().getItemList().remove(item);
                             break;
                         }
+                            
                     }
                 }
 

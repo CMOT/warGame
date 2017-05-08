@@ -53,7 +53,7 @@ public class BuildController {
 //            int x = (int)(Math.random()*400+50);
             int x = (int)((Math.random()*100)+450);
             int y = (int)(Math.random()*120);
-            y=(y*i)+50;
+            y=(y*i)+100;
             getListBuilds().add(catalog.getTower(50, x, y, team));
         }
     }

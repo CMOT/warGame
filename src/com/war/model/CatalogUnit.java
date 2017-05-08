@@ -26,7 +26,7 @@ public class CatalogUnit {
         return new Marine("Master Chief", 250, x, y , 15 , "soldadon", team, "bala", 40);
     }
     
-    public Unit getAmetrallador(int x, int y, int team){
+    public Unit getTank(int x, int y, int team){
         return new Marine("Tanque", 350, x, y , 11 , "tanque", team, "metralleta", 60);
     }
     

@@ -42,8 +42,6 @@ public class MouseController implements MouseListener {
         if (e.getModifiers() == 16) {
             if(!CommonUtils.itemselect.isEmpty() ){
                 level.getItemController().addItem(e.getX(), e.getY(), 1);
-                CommonUtils.points -=100; 
-                CommonUtils.itemselect="";
             }else{
                 CommonUtils.selected=null;
                 for (Unit unit : level.getUnitController().getListAllies()) {

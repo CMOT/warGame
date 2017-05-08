@@ -29,12 +29,18 @@ public class ItemController {
         switch(type){
             case "smallBomb"://Bomba
                 itemList.add(catalogItem.getSmallBombItem(x, y, 180 ,team));
+                CommonUtils.points -=100; 
                 break;
-            case "bigBomb"://Por definir nuevos items
+            case "bigBomb"://Bomba grande
                 itemList.add(catalogItem.getBigBombItem(x, y, 240 ,team));
+                CommonUtils.points -=180; 
+                break;
+            case "cure":
+                itemList.add(catalogItem.getHealthItem(x, y, 180 ,team));
+                CommonUtils.points -=50; 
                 break;
         }
-        
+        CommonUtils.itemselect="";
     }
     
     /**
