@@ -13,10 +13,12 @@ import com.war.controller.UnitController;
 import com.war.model.Bomb;
 import com.war.model.Build;
 import com.war.model.Bullet;
+import com.war.model.Health;
 import com.war.model.Item;
 import com.war.model.Marine;
 import com.war.model.Metropoly;
 import com.war.model.Target;
+import com.war.model.Tower;
 import com.war.model.Unit;
 import com.war.utils.CommonUtils;
 import java.awt.Color;
@@ -74,10 +76,22 @@ public class LevelTwo extends Level implements Runnable{
             if(build instanceof Metropoly){
                 Metropoly metro= (Metropoly) build;
                 metro.paint(g2d);
+            }else if(build instanceof Tower){
+                Tower tower = (Tower) build;
+                tower.paint(g2d);
             }
         }
         if(super.getUnitController().getBossUnit()!=null){
             super.getUnitController().getBossUnit().paint(g2d);
+        }
+        for (Item item : super.getItemController().getItemList()) {
+            if(item instanceof Bomb){
+                Bomb bomb = (Bomb) item;
+                bomb.paint(g2d);
+            }else if(item instanceof Health){
+                Health health= (Health) item;
+                health.paint(g2d);
+            }
         }
         for(Unit allie: getUnitController().getListAllies()){
             if(allie instanceof Marine){
@@ -181,11 +195,18 @@ public class LevelTwo extends Level implements Runnable{
 //            if((eliminated=super.getBulletController().shootBuildsAllies(super.getBuildController().getListBuildAllies()))!=null){
 //                 eliminated= super.getUnitController().deleteTargets(eliminated);
 //            }
-            for(Build metro: super.getBuildController().getListBuilds()){
-                boolean crear=super.getBuildController().equalsGame(metro.getHealtPoints());
-                if(crear){
-                    super.getUnitController().createEnemies(metro.getLifePoints()/metro.getHealtPoints()+super.getLevelController().getDifficult(), new Point(super.getBuildController().getListBuilds().get(0).getX(),super.getBuildController().getListBuilds().get(0).getY()), "momia");
-                }
+            for(Build build: super.getBuildController().getListBuilds()){
+                 if(build instanceof Metropoly){
+                        boolean crear=super.getBuildController().equalsGame(build.getHealtPoints());
+                        if(crear){
+                            super.getUnitController().createEnemies(build.getLifePoints()/build.getHealtPoints()+super.getLevelController().getDifficult(), new Point(super.getBuildController().getListBuilds().get(0).getX(),super.getBuildController().getListBuilds().get(0).getY()), "momia");
+                        }
+                    }else if(build instanceof Tower){
+                        Tower tower= (Tower) build;
+                        if(tower.shoot()){
+                            getBulletController().shootFromBuilds(tower);
+                        }
+                    }
             }
             
             for(Item item: super.getItemController().getItemList()){
@@ -197,6 +218,13 @@ public class LevelTwo extends Level implements Runnable{
                             break;
                         }
                     }
+                }else if(item instanceof Health){
+                        Health health= (Health) item;
+                        if(super.getUnitController().cureUnits(health)==1){
+                            super.getItemController().getItemList().remove(item);
+                            break;
+                        }
+                            
                 }
             }
             

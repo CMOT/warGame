@@ -458,7 +458,7 @@ public class UnitController {
         if(health.isCuring()){
             for(Unit unitAllie :  listAllies){
                 if(health.getCollisionRec().intersects(unitAllie.getCollisionRec())){
-                    unitAllie.setHealtPoints(unitAllie.getHealtPoints()-health.getPower());
+                    unitAllie.setHealtPoints(unitAllie.getHealtPoints()+health.getPower());
                     if(unitAllie.getHealtPoints()>=unitAllie.getLifePoints()){
                         unitAllie.setHealtPoints(unitAllie.getLifePoints());
                     }

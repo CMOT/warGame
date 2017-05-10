@@ -38,9 +38,9 @@ public class MessageLabel {
         g2d.setColor(getSelectedColor(color));
         g2d.drawString(message, x, y);
         if(counter<60){
-            y+=5;
-        }else if(counter > 140){
             y+=6;
+        }else if(counter > 120){
+            y+=7;
         }
         if(y > CommonUtils.height){
             setFinish(true);

@@ -10,7 +10,7 @@ import com.war.GUI.Level;
 import com.war.GUI.LevelThree;
 import com.war.GUI.LevelTwo;
 import com.war.GUI.Menu;
-import static com.war.GUI.Menu.actualLevel;
+
 import com.war.GUI.PanelInfo;
 import com.war.model.MessageLabel;
 import com.war.utils.CommonUtils;
@@ -50,9 +50,9 @@ public class LevelController {
     }
     
     public MessageLabel isNewMessage(){
-            String message=CommonUtils.message;
-            CommonUtils.message="";
-            return new MessageLabel(200, message, CommonUtils.typeMessage);
+        String message=CommonUtils.message;
+        CommonUtils.message="";
+        return new MessageLabel(220, message, CommonUtils.typeMessage);
     }
 
     public void levelUp(Level level){
@@ -77,9 +77,10 @@ public class LevelController {
                 break;
         }
         if(newLevel!=null){
+            
             Menu.actualLevel= newLevel;
-            actualLevel.addMouseListener(new MouseController(newLevel, info ));
-            Menu.panelCanvas.add(actualLevel);
+            Menu.actualLevel.addMouseListener(new MouseController(newLevel, info ));
+            Menu.panelCanvas.add(Menu.actualLevel);
             CommonUtils.resetValues();
         }
     }
@@ -140,8 +141,4 @@ public class LevelController {
     public void setBossFree(boolean bossFree) {
         this.bossFree = bossFree;
     }
-    
-    
-    
-    
 }

@@ -277,7 +277,7 @@ public class PanelInfo extends javax.swing.JPanel {
                  }
             }
         }else{
-            CommonUtils.message="You need 180 points for create this unit!";
+            CommonUtils.message="You need 120 points for create this unit!";
             CommonUtils.typeMessage=1;
         }
     }//GEN-LAST:event_lblUnit2MouseClicked
@@ -313,7 +313,7 @@ public class PanelInfo extends javax.swing.JPanel {
             CommonUtils.itemselect="bigBomb";
             CommonUtils.selected=null;
         }else{
-            CommonUtils.message="You need 100 points for get a Big Bomb item!";
+            CommonUtils.message="You need 180 points for get a Big Bomb item!";
             CommonUtils.typeMessage=1;
         }
     }//GEN-LAST:event_jLabel2MouseClicked
