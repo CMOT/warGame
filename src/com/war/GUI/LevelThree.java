@@ -7,13 +7,18 @@ package com.war.GUI;
 
 import com.war.controller.BuildController;
 import com.war.controller.BulletController;
+import com.war.controller.ItemController;
 import com.war.controller.LevelController;
 import com.war.controller.UnitController;
+import com.war.model.Bomb;
 import com.war.model.Build;
 import com.war.model.Bullet;
+import com.war.model.Health;
+import com.war.model.Item;
 import com.war.model.Marine;
 import com.war.model.Metropoly;
 import com.war.model.Target;
+import com.war.model.Tower;
 import com.war.model.Unit;
 import com.war.utils.CommonUtils;
 import java.awt.Color;
@@ -45,6 +50,7 @@ public class LevelThree extends Level implements Runnable{
         super.setUnitController(new UnitController());
         super.setBuildController( new BuildController());
         super.setBulletController( new BulletController());
+        super.setItemController( new ItemController());
         super.getUnitController().fillListEnemies(difficult, width-200, height-400, "vampiro");
         super.getUnitController().fillListAllies(100, 100, difficult);
         super.getBuildController().fillBuildEnemies(this.getWidth()-140,200, 2, difficult);
@@ -71,10 +77,22 @@ public class LevelThree extends Level implements Runnable{
             if(build instanceof Metropoly){
                 Metropoly metro= (Metropoly) build;
                 metro.paint(g2d);
+            }else if(build instanceof Tower){
+                Tower tower = (Tower) build;
+                tower.paint(g2d);
             }
         }
         if(super.getUnitController().getBossUnit()!=null){
             super.getUnitController().getBossUnit().paint(g2d);
+        }
+        for (Item item : super.getItemController().getItemList()) {
+            if(item instanceof Bomb){
+                Bomb bomb = (Bomb) item;
+                bomb.paint(g2d);
+            }else if(item instanceof Health){
+                Health health= (Health) item;
+                health.paint(g2d);
+            }
         }
         for(Unit allie: getUnitController().getListAllies()){
             if(allie instanceof Marine){
@@ -99,6 +117,12 @@ public class LevelThree extends Level implements Runnable{
         g2d.setFont(font);
         g2d.drawString("Level: "+Menu.levelNumber, 10, 30);
         g2d.drawString("Points: "+CommonUtils.points, 10, 60);
+        if(super.getMessageLabel()!=null){
+            super.getMessageLabel().paint(g2d);
+            if(super.getMessageLabel().isFinish()){
+                super.setMessageLabel(null);
+            }
+        }
 //        g2d.drawString("Time: "+super.getLevelController().getTime(), CommonUtils.width-150, 30);
     }
     
@@ -126,6 +150,11 @@ public class LevelThree extends Level implements Runnable{
             try {
                 hilo.sleep(40);
             } catch (InterruptedException ex) {}
+            if(!CommonUtils.itemselect.isEmpty()){
+                getLevelController().changeCursor(this,"item");
+            }else{
+                getLevelController().changeCursor(this,"");
+            }
             for(Unit unit:super.getUnitController().getListAllies()){
                 if(unit.getCountShoot()!=unit.getShootCold() ){
                     if( unit.getCountShoot()<=unit.getShootCold()+16){
@@ -168,14 +197,43 @@ public class LevelThree extends Level implements Runnable{
 //            if((eliminated=super.getBulletController().shootBuildsAllies(super.getBuildController().getListBuildAllies()))!=null){
 //                 eliminated= super.getUnitController().deleteTargets(eliminated);
 //            }
-            for(Build metro: super.getBuildController().getListBuilds()){
-                boolean crear=super.getBuildController().equalsGame(metro.getHealtPoints());
-                if(crear){
-                    super.getUnitController().createEnemies(metro.getLifePoints()/metro.getHealtPoints()+super.getLevelController().getDifficult(), new Point(super.getBuildController().getListBuilds().get(0).getX(),super.getBuildController().getListBuilds().get(0).getY()), "vampiro");
+            for(Build build: super.getBuildController().getListBuilds()){
+                if(build instanceof Metropoly){
+                    boolean crear=super.getBuildController().equalsGame(build.getHealtPoints());
+                    if(crear){
+                        super.getUnitController().createEnemies(build.getLifePoints()/build.getHealtPoints()+super.getLevelController().getDifficult(), new Point(super.getBuildController().getListBuilds().get(0).getX(),super.getBuildController().getListBuilds().get(0).getY()), "clown");
+                    }
+                }else if(build instanceof Tower){
+                    Tower tower= (Tower) build;
+                    if(tower.shoot()){
+                        getBulletController().shootFromBuilds(tower);
+                    }
                 }
             }
-                
+            
+            for(Item item: super.getItemController().getItemList()){
+                if(item instanceof Bomb){
+                    if(item.isActive()){
+                        Bomb bomb = (Bomb) item;
+                        if(super.getUnitController().boomBomb(bomb)==1){
+                            super.getItemController().getItemList().remove(item);
+                            break;
+                        }
+                    }
+                }else if(item instanceof Health){
+                    Health health= (Health) item;
+                    if(super.getUnitController().cureUnits(health)==1){
+                        super.getItemController().getItemList().remove(item);
+                        break;
+                    }
+
+                }
+            }
+            
             super.getLevelController().goTime();
+            if(!CommonUtils.message.isEmpty()){
+                super.setMessageLabel( super.getLevelController().isNewMessage());
+            }
             if(super.getBuildController().createUnit()){
                 super.getUnitController().createUnit();
             }
@@ -199,8 +257,16 @@ public class LevelThree extends Level implements Runnable{
                 }
             }
             if(super.getUnitController().getBossUnit()==null && super.getLevelController().isBossFree()){
-                JOptionPane.showMessageDialog(null, "You finish level three");
-                runThread=false;
+//            if(super.getUnitController().getBossUnit()==null ){
+                if(super.getMessageLabel()==null && !super.isWinLevel()){
+                    CommonUtils.message="!You finish Level three<!";
+                    CommonUtils.typeMessage=4;
+                    super.setMessageLabel( super.getLevelController().isNewMessage());
+                    super.setWinLevel(true);
+                }else if(super.isWinLevel() && super.getMessageLabel()==null){
+                    runThread=false;
+                    super.getLevelController().levelUp(this);
+                }
             }
             repaint();
         }
